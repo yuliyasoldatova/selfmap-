@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Карта самодиагностики «Где я потеряла себя?»</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#122A22;
+    --bg-panel:#1B3A2E;
+    --bg-panel-light:#234636;
+    --line:#3E5F4F;
+    --gold:#C9A24B;
+    --gold-soft:#E3C97A;
+    --cream:#EFE8D8;
+    --cream-dim:#B9C7BC;
+    --rust:#B25A42;
+    --rust-soft:#D98466;
+    --sage:#7FA894;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 20% -10%, #1E4535 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 110%, #0D2019 0%, transparent 60%),
+      var(--bg-deep);
+    color:var(--cream);
+    font-family:'Manrope', sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:28px 14px 60px;
+  }
+  .app{
+    width:100%;
+    max-width:640px;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px;height:1px;background:var(--gold);display:inline-block;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(28px,6vw,40px);
+    line-height:1.12;
+    margin:0 0 14px;
+    color:var(--cream);
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--gold-soft);
+  }
+  p.lead{
+    color:var(--cream-dim);
+    font-size:15.5px;
+    line-height:1.6;
+    margin:0 0 22px;
+  }
+  .card{
+    background:linear-gradient(160deg, var(--bg-panel) 0%, var(--bg-panel-light) 100%);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+    margin-bottom:18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:34px 34px;
+    opacity:.06;
+    pointer-events:none;
+  }
+  .btn{
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    border:none;
+    border-radius:999px;
+    padding:14px 26px;
+    cursor:pointer;
+    background:var(--gold);
+    color:#17281F;
+    transition:transform .15s ease, background .15s ease;
+    letter-spacing:.01em;
+  }
+  .btn:hover{ background:var(--gold-soft); transform:translateY(-1px); }
+  .btn:disabled{ opacity:.35; cursor:not-allowed; transform:none; }
+  .btn.ghost{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--cream-dim);
+  }
+  .btn.ghost:hover{ background:var(--bg-panel-light); color:var(--cream); }
+  .btn-row{ display:flex; gap:12px; justify-content:space-between; margin-top:20px; align-items:center; }
+
+  /* progress path */
+  .path{
+    display:flex;
+    gap:6px;
+    margin:26px 0 8px;
+  }
+  .station{
+    flex:1;
+    height:4px;
+    border-radius:3px;
+    background:var(--line);
+    position:relative;
+  }
+  .station.done{ background:var(--sage); }
+  .station.current{ background:var(--gold); }
+  .path-label{
+    display:flex; justify-content:space-between;
+    font-size:11.5px; color:var(--cream-dim); letter-spacing:.06em; text-transform:uppercase;
+    margin-bottom:6px;
+  }
+
+  .sphere-head{ display:flex; align-items:center; gap:14px; margin-bottom:4px; }
+  .sphere-icon{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--bg-deep); border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .sphere-num{ font-family:'Fraunces',serif; font-size:13px; color:var(--gold); }
+  .sphere-title{ font-family:'Fraunces', serif; font-size:22px; color:var(--cream); font-weight:500; }
+  .sphere-sub{ color:var(--cream-dim); font-size:13.5px; margin:2px 0 20px; }
+
+  .statement{ margin-bottom:22px; }
+  .statement-text{ font-size:15.5px; line-height:1.5; margin-bottom:12px; color:var(--cream); }
+  .scale{ display:flex; gap:8px; }
+  .scale button{
+    flex:1;
+    padding:10px 4px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    background:var(--bg-deep);
+    color:var(--cream-dim);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .scale button:hover{ border-color:var(--gold); color:var(--cream); }
+  .scale button.selected{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:#17281F;
+  }
+  .scale-caption{ display:flex; justify-content:space-between; font-size:10.5px; color:var(--cream-dim); margin-top:6px; opacity:.75; }
+
+  /* results */
+  .radar-wrap{ display:flex; justify-content:center; margin:6px 0 10px; }
+  .result-row{
+    display:flex; align-items:center; gap:14px;
+    padding:13px 0; border-bottom:1px solid var(--line);
+  }
+  .result-row:last-child{ border-bottom:none; }
+  .result-rank{ font-family:'Fraunces',serif; color:var(--gold); font-size:14px; width:18px; }
+  .result-name{ flex:1; font-size:15px; color:var(--cream); }
+  .result-bar-track{ flex:1.4; height:7px; background:var(--bg-deep); border-radius:6px; overflow:hidden; }
+  .result-bar-fill{ height:100%; border-radius:6px; }
+  .result-pct{ width:42px; text-align:right; font-size:13px; color:var(--cream-dim); font-variant-numeric:tabular-nums; }
+
+  .diagnosis-block{ margin-top:8px; }
+  .diagnosis-sphere{
+    background:var(--bg-panel-light);
+    border-left:3px solid var(--rust-soft);
+    border-radius:0 10px 10px 0;
+    padding:16px 18px;
+    margin-bottom:14px;
+  }
+  .diagnosis-sphere h4{
+    margin:0 0 6px; font-family:'Fraunces',serif; font-weight:500; font-size:17px; color:var(--gold-soft);
+  }
+  .diagnosis-sphere p{ margin:0; font-size:14px; line-height:1.55; color:var(--cream-dim); }
+  .diagnosis-sphere .q{
+    margin-top:8px; font-size:13.5px; font-style:italic; color:var(--sage);
+  }
+
+  .hidden{ display:none !important; }
+  .footer-note{
+    text-align:center; color:var(--cream-dim); font-size:12.5px; margin-top:26px; line-height:1.6; opacity:.8;
+  }
+  #restartBtn{ display:block; margin:24px auto 0; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- INTRO -->
+  <div id="screen-intro">
+    <div class="eyebrow">Карта самодиагностики</div>
+    <h1>Где я <em>потеряла себя?</em></h1>
+    <p class="lead">
+      Это короткое путешествие по девяти территориям жизни: База, Семья, Самореализация,
+      Изобилие, Духовность, Социум, Знания, Удовольствия и Миссия. В каждой сфере — 4 утверждения.
+      Отвечай честно и быстро, первым импульсом — так карта получится точнее.
+    </p>
+    <div class="card">
+      <p style="margin:0 0 6px; color:var(--cream); font-weight:600; font-size:14.5px;">Как это работает</p>
+      <p style="margin:0; color:var(--cream-dim); font-size:14px; line-height:1.6;">
+        Оцени каждое утверждение от 1 до 5, где 1 — «совсем не про меня», 5 — «это точно про меня».
+        В конце ты увидишь карту своих девяти сфер и территории, где стоит начать возвращать себя.
+      </p>
+    </div>
+    <button class="btn" onclick="startQuiz()">Начать путешествие →</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz" class="hidden">
+    <div class="path-label"><span id="pathLabel">Территория 1 из 9</span><span id="pathPct">0%</span></div>
+    <div class="path" id="pathBar"></div>
+
+    <div class="card">
+      <div class="sphere-head">
+        <div class="sphere-icon"><span id="sphereIconTxt" style="font-size:19px;"></span></div>
+        <div>
+          <div class="sphere-num" id="sphereNum">Сфера 01</div>
+          <div class="sphere-title" id="sphereTitle">База</div>
+        </div>
+      </div>
+      <p class="sphere-sub" id="sphereSub"></p>
+      <div id="statementsContainer"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn ghost" id="backBtn" onclick="goBack()">← Назад</button>
+      <button class="btn" id="nextBtn" onclick="goNext()" disabled>Дальше →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="screen-results" class="hidden">
+    <div class="eyebrow">Твоя карта готова</div>
+    <h1>Вот где ты <em>сейчас</em></h1>
+    <p class="lead">Чем ближе линия к центру — тем сильнее ощущение, что себя в этой сфере сейчас нет.</p>
+
+    <div class="card">
+      <div class="radar-wrap"><svg id="radarSvg" width="360" height="360" viewBox="0 0 360 360"></svg></div>
+      <div id="resultRows"></div>
+    </div>
+
+    <div class="diagnosis-block">
+      <p class="eyebrow" style="margin-top:26px;">Территории, где ты потеряла себя больше всего</p>
+      <div id="diagnosisRows"></div>
+    </div>
+
+    <p class="footer-note">
+      Это не диагноз, а компас: он показывает направление, а не приговор.<br>
+      Возвращение к себе редко случается во всех сферах сразу — начни с одной.
+    </p>
+    <button class="btn ghost" id="restartBtn" onclick="restart()">↺ Пройти заново</button>
+  </div>
+
+</div>
+
+<script>
+const SPHERES = [
+  { key:'base', title:'База', icon:'⚓', sub:'Тело, здоровье, ощущение опоры и безопасности',
+    statements:[
+      'Я высыпаюсь и чувствую в теле энергию, а не только усталость.',
+      'Я слышу сигналы своего тела и забочусь о них вовремя.',
+      'У меня есть ощущение опоры и безопасности в повседневной жизни.',
+      'Я трачу ресурс на себя, а не живу «в долг» у собственного здоровья.'
+    ],
+    low:'Тело и базовая опора часто первыми сигналят о потере себя — через усталость, тревожность, болезни «на ровном месте». Если здесь просадка, любые перемены в других сферах будут держаться на честном слове.',
+    q:'Что одно маленькое действие для тела ты можешь сделать уже сегодня — не «когда-нибудь», а сейчас?'
+  },
+  { key:'family', title:'Семья', icon:'🏠', sub:'Близкие отношения, принятие, поддержка',
+    statements:[
+      'В моей семье меня видят и слышат такой, какая я есть.',
+      'Я не боюсь говорить близким о своих потребностях.',
+      'Отношения в семье дают мне силы, а не только забирают их.',
+      'Я чувствую тепло и поддержку от близких, а не только обязанности перед ними.'
+    ],
+    low:'Когда в семье привычнее быть «удобной», чем настоящей, себя легко потерять именно там, где, казалось бы, тебя должны знать лучше всего.',
+    q:'Кому из близких ты давно не говорила о том, что тебе на самом деле нужно?'
+  },
+  { key:'self', title:'Самореализация', icon:'🧭', sub:'Дело, способности, ощущение «это моё»',
+    statements:[
+      'Я занимаюсь тем, что действительно раскрывает мои способности.',
+      'Моё дело приносит мне ощущение «это моё».',
+      'Я вижу рост и результаты своих усилий.',
+      'Я принимаю решения о своём деле сама, а не по инерции или под чужим влиянием.'
+    ],
+    low:'Просадка здесь часто звучит как «я будто делаю не своё дело» или «застряла, но не понимаю где». Это территория, где потеря себя маскируется под усталость от работы.',
+    q:'Если бы никто не оценивал результат, чем бы ты занималась иначе?'
+  },
+  { key:'abundance', title:'Изобилие', icon:'✳', sub:'Деньги, ресурсы, ощущение достаточности',
+    statements:[
+      'Я спокойно отношусь к деньгам и разрешаю себе достаточно.',
+      'Мой доход соответствует моим усилиям и ценности.',
+      'Я умею и получать, и отдавать, не испытывая вины.',
+      'У меня есть ощущение, что ресурсов на жизнь, которую я хочу, достаточно.'
+    ],
+    low:'Потеря себя здесь часто выглядит как хроническое «мне нельзя больше» или незаметное самоограничение — даже когда объективно ресурс есть.',
+    q:'В чём ты последний раз отказала себе «на всякий случай», хотя могла себе это позволить?'
+  },
+  { key:'spirit', title:'Духовность', icon:'✦', sub:'Смысл, тишина, связь с собой',
+    statements:[
+      'У меня есть практики или опоры, которые дают ощущение смысла.',
+      'Я доверяю жизни, даже когда не всё контролирую.',
+      'Я нахожу время для тишины, размышлений, связи с собой.',
+      'Я чувствую, что моя жизнь больше, чем список дел.'
+    ],
+    low:'Когда жизнь состоит только из задач и контроля, теряется ощущение опоры на что-то большее — а вместе с ним и часть себя.',
+    q:'Когда ты в последний раз была в тишине наедине с собой без телефона и задач?'
+  },
+  { key:'society', title:'Социум', icon:'◎', sub:'Окружение, дружба, живое общение',
+    statements:[
+      'У меня есть люди, с которыми я могу быть настоящей.',
+      'Моё окружение вдохновляет и поддерживает меня.',
+      'Я легко строю новые тёплые связи, когда мне это нужно.',
+      'Я не чувствую одиночества среди людей.'
+    ],
+    low:'Можно быть постоянно на связи и при этом остро одинокой — это верный признак, что в этой сфере себя давно не было слышно даже друзьям.',
+    q:'С кем из окружения тебе приходится всё время «играть роль»?'
+  },
+  { key:'knowledge', title:'Знания', icon:'✎', sub:'Развитие, обучение, любопытство',
+    statements:[
+      'Я регулярно узнаю новое и это меня радует.',
+      'Я применяю знания на практике, а не просто коплю их.',
+      'Мне интересно учиться, а не «надо для галочки».',
+      'Я доверяю своей способности разбираться в новом.'
+    ],
+    low:'Когда обучение превращается в обязаловку или полностью исчезает из жизни, вместе с ним угасает и живое любопытство к себе.',
+    q:'Что тебе было по-настоящему интересно изучать в последний раз — не «для пользы», а из любопытства?'
+  },
+  { key:'pleasure', title:'Удовольствия', icon:'☀', sub:'Радость, лёгкость, отдых без вины',
+    statements:[
+      'Я регулярно делаю то, что приносит мне чистую радость.',
+      'Я умею отдыхать, не испытывая вины за безделье.',
+      'В моей жизни есть место лёгкости и игре.',
+      'Я разрешаю себе удовольствие без «сначала заслужи».'
+    ],
+    low:'Если удовольствие нужно заслужить, а отдых сопровождается виной — это верный признак того, что радость давно вытеснена из жизни функцией «надо».',
+    q:'Что бы ты сделала сегодня просто для радости, если бы это разрешалось без повода?'
+  },
+  { key:'mission', title:'Миссия', icon:'★', sub:'Предназначение, смысл большего',
+    statements:[
+      'Я чувствую, что моя жизнь имеет направление, вижу «зачем».',
+      'Мои ежедневные дела связаны с чем-то большим для меня.',
+      'Я ощущаю, что мои таланты нужны миру.',
+      'Я живу свою жизнь, а не чужой сценарий.'
+    ],
+    low:'Потеря себя в миссии ощущается как хроническое «а зачем всё это» — даже при внешне благополучной жизни.',
+    q:'Чей сценарий ты сейчас живёшь — свой, или тот, что когда-то одобрили родители, окружение, общество?'
+  }
+];
+
+let current = 0;
+let answers = SPHERES.map(s => new Array(s.statements.length).fill(0));
+
+function startQuiz(){
+  document.getElementById('screen-intro').classList.add('hidden');
+  document.getElementById('screen-quiz').classList.remove('hidden');
+  renderPath();
+  renderSphere();
+}
+
+function renderPath(){
+  const bar = document.getElementById('pathBar');
+  bar.innerHTML = '';
+  SPHERES.forEach((s,i)=>{
+    const d = document.createElement('div');
+    d.className = 'station' + (i < current ? ' done' : i === current ? ' current' : '');
+    bar.appendChild(d);
+  });
+  document.getElementById('pathLabel').textContent = `Территория ${current+1} из ${SPHERES.length}`;
+  document.getElementById('pathPct').textContent = Math.round((current)/SPHERES.length*100) + '%';
+}
+
+function renderSphere(){
+  const s = SPHERES[current];
+  document.getElementById('sphereIconTxt').textContent = s.icon;
+  document.getElementById('sphereNum').textContent = 'Сфера ' + String(current+1).padStart(2,'0');
+  document.getElementById('sphereTitle').textContent = s.title;
+  document.getElementById('sphereSub').textContent = s.sub;
+
+  const container = document.getElementById('statementsContainer');
+  container.innerHTML = '';
+  s.statements.forEach((text, si)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'statement';
+    const p = document.createElement('div');
+    p.className = 'statement-text';
+    p.textContent = text;
+    wrap.appendChild(p);
+
+    const scale = document.createElement('div');
+    scale.className = 'scale';
+    for(let v=1; v<=5; v++){
+      const b = document.createElement('button');
+      b.textContent = v;
+      if(answers[current][si] === v) b.classList.add('selected');
+      b.onclick = ()=>{
+        answers[current][si] = v;
+        renderSphere();
+        updateNextBtn();
+      };
+      scale.appendChild(b);
+    }
+    wrap.appendChild(scale);
+
+    const cap = document.createElement('div');
+    cap.className = 'scale-caption';
+    cap.innerHTML = '<span>совсем не про меня</span><span>точно про меня</span>';
+    wrap.appendChild(cap);
+
+    container.appendChild(wrap);
+  });
+
+  document.getElementById('backBtn').style.visibility = current === 0 ? 'hidden' : 'visible';
+  updateNextBtn();
+}
+
+function updateNextBtn(){
+  const allAnswered = answers[current].every(v => v > 0);
+  const btn = document.getElementById('nextBtn');
+  btn.disabled = !allAnswered;
+  btn.textContent = current === SPHERES.length - 1 ? 'Показать карту →' : 'Дальше →';
+}
+
+function goNext(){
+  if(current < SPHERES.length - 1){
+    current++;
+    renderPath();
+    renderSphere();
+    window.scrollTo({top:0, behavior:'smooth'});
+  } else {
+    showResults();
+  }
+}
+function goBack(){
+  if(current > 0){
+    current--;
+    renderPath();
+    renderSphere();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+function computeScores(){
+  return SPHERES.map((s,i)=>{
+    const sum = answers[i].reduce((a,b)=>a+b,0);
+    const pct = Math.round(sum / (s.statements.length*5) * 100);
+    return { title:s.title, key:s.key, pct, low:s.low, q:s.q };
+  });
+}
+
+function colorForPct(pct){
+  if(pct >= 75) return '#7FA894';
+  if(pct >= 50) return '#C9A24B';
+  return '#B25A42';
+}
+
+function showResults(){
+  document.getElementById('screen-quiz').classList.add('hidden');
+  document.getElementById('screen-results').classList.remove('hidden');
+  const scores = computeScores();
+  drawRadar(scores);
+  renderResultRows(scores);
+  renderDiagnosis(scores);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function renderResultRows(scores){
+  const container = document.getElementById('resultRows');
+  container.innerHTML = '';
+  const sorted = [...scores].sort((a,b)=>a.pct-b.pct);
+  sorted.forEach((s, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'result-row';
+    row.innerHTML = `
+      <div class="result-rank">${idx+1}</div>
+      <div class="result-name">${s.title}</div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:${s.pct}%; background:${colorForPct(s.pct)};"></div></div>
+      <div class="result-pct">${s.pct}%</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function renderDiagnosis(scores){
+  const sorted = [...scores].sort((a,b)=>a.pct-b.pct).slice(0,3);
+  const container = document.getElementById('diagnosisRows');
+  container.innerHTML = '';
+  sorted.forEach(s=>{
+    const block = document.createElement('div');
+    block.className = 'diagnosis-sphere';
+    block.innerHTML = `
+      <h4>${s.title} — ${s.pct}%</h4>
+      <p>${s.low}</p>
+      <p class="q">${s.q}</p>
+    `;
+    container.appendChild(block);
+  });
+}
+
+function drawRadar(scores){
+  const svg = document.getElementById('radarSvg');
+  const cx = 180, cy = 180, R = 130;
+  const n = scores.length;
+  const rings = [0.25, 0.5, 0.75, 1];
+  let html = '';
+
+  // grid rings
+  rings.forEach(r=>{
+    let pts = [];
+    for(let i=0;i<n;i++){
+      const ang = -Math.PI/2 + i*(2*Math.PI/n);
+      pts.push(`${cx + R*r*Math.cos(ang)},${cy + R*r*Math.sin(ang)}`);
+    }
+    html += `<polygon points="${pts.join(' ')}" fill="none" stroke="#3E5F4F" stroke-width="1" opacity="${r===1?0.6:0.3}"/>`;
+  });
+
+  // axes + labels
+  scores.forEach((s,i)=>{
+    const ang = -Math.PI/2 + i*(2*Math.PI/n);
+    const x2 = cx + R*Math.cos(ang), y2 = cy + R*Math.sin(ang);
+    html += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#3E5F4F" stroke-width="1" opacity="0.35"/>`;
+    const lx = cx + (R+26)*Math.cos(ang), ly = cy + (R+26)*Math.sin(ang);
+    html += `<text x="${lx}" y="${ly}" fill="#EFE8D8" font-size="11" font-family="Manrope, sans-serif" text-anchor="middle" dominant-baseline="middle">${s.title}</text>`;
+  });
+
+  // data polygon
+  let dataPts = [];
+  scores.forEach((s,i)=>{
+    const ang = -Math.PI/2 + i*(2*Math.PI/n);
+    const r = R * (s.pct/100);
+    dataPts.push(`${cx + r*Math.cos(ang)},${cy + r*Math.sin(ang)}`);
+  });
+  html += `<polygon points="${dataPts.join(' ')}" fill="#C9A24B" fill-opacity="0.22" stroke="#E3C97A" stroke-width="2"/>`;
+
+  // data dots
+  scores.forEach((s,i)=>{
+    const ang = -Math.PI/2 + i*(2*Math.PI/n);
+    const r = R * (s.pct/100);
+    const x = cx + r*Math.cos(ang), y = cy + r*Math.sin(ang);
+    html += `<circle cx="${x}" cy="${y}" r="4" fill="${colorForPct(s.pct)}" stroke="#122A22" stroke-width="1.5"/>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+function restart(){
+  current = 0;
+  answers = SPHERES.map(s => new Array(s.statements.length).fill(0));
+  document.getElementById('screen-results').classList.add('hidden');
+  document.getElementById('screen-intro').classList.remove('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
