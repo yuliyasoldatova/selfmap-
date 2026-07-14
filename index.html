@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Reset Lab — чакровая диагностика</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/recharts@2.10.0/dist/Recharts.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: #F7F3EC;
+      color: #2A2520;
+    }
+    
+    .font-display {
+      font-family: 'Fraunces', serif;
+    }
+    
+    .font-mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .aura {
+      animation: breathe 7s ease-in-out infinite;
+    }
+    
+    @keyframes breathe {
+      0%, 100% { opacity: 0.28; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.07); }
+    }
+    
+    .rise {
+      animation: rise 0.5s ease both;
+    }
+    
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .pop {
+      animation: pop 0.4s ease both;
+    }
+    
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .aura, .rise, .pop {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+    const { ArrowRight, ArrowLeft, KeyRound, Mail, ShieldCheck, Mountain, Droplets, Sun, Heart, MessageCircle, Eye, Flower2, Check, Clock, HeartHandshake, Sparkles, Download, ChevronRight, Lightbulb } = lucide;
+
+    const COLORS = {
+      bg: "#F7F3EC",
+      card: "#FFFDF9",
+      cardAlt: "#F1EADB",
+      ink: "#2A2520",
+      muted: "#8B8172",
+      gold: "#A9824C",
+      goldSoft: "#C7A66C",
+      hairline: "#E4D8C2",
+    };
+
+    const CHAKRAS = [
+      { key: "root", name: "Опора", trad: "Корневая чакра", color: "#A6553D", icon: Mountain },
+      { key: "sacral", name: "Чувства и удовольствие", trad: "Сакральная чакра", color: "#BD7C3E", icon: Droplets },
+      { key: "solar", name: "Уверенность и воля", trad: "Чакра солнечного сплетения", color: "#BFA24C", icon: Sun },
+      { key: "heart", name: "Любовь и связь", trad: "Сердечная чакра", color: "#7C8F6B", icon: Heart },
+      { key: "throat", name: "Голос и правда", trad: "Горловая чакра", color: "#6C8798", icon: MessageCircle },
+      { key: "third_eye", name: "Интуиция и ясность", trad: "Чакра третьего глаза", color: "#5B6389", icon: Eye },
+      { key: "crown", name: "Смысл и связь", trad: "Коронная чакра", color: "#8C7F9B", icon: Flower2 },
+    ];
+
+    // Вопросы по 5 на каждый центр для компактности демо
+    const QUESTIONS_BY_CHAKRA = {
+      root: [
+        "Я чувствую себя финансово защищённым(ой)",
+        "Моё тело ощущается как надёжное место",
+        "Мне легко найти опору в трудные периоды",
+        "У меня есть ощущение «дома»",
+        "Я хорошо сплю и восстанавливаюсь",
+      ],
+      sacral: [
+        "Я разрешаю себе получать удовольствие без чувства вины",
+        "Мне легко выражать свои эмоции",
+        "Я чувствую творческий поток в жизни",
+        "Мне не сложно быть спонтанным(ой)",
+        "Я хорошо чувствую свои желания",
+      ],
+      solar: [
+        "Я уверенно принимаю решения",
+        "Мне комфортно отстаивать свои границы",
+        "Я доверяю своей внутренней силе",
+        "Мне не сложно сказать «нет»",
+        "Я довожу начатое до конца",
+      ],
+      heart: [
+        "Я легко даю и принимаю любовь",
+        "Я умею прощать — себя и других",
+        "Мои отношения ощущаются искренними",
+        "Мне легко быть уязвимым(ой)",
+        "Я благодарна за то, что у меня есть",
+      ],
+      throat: [
+        "Мне легко говорить то, что я думаю",
+        "Меня слышат в важных разговорах",
+        "Я говорю правду, даже когда неудобно",
+        "Мне комфортно выражать несогласие",
+        "Я умею внятно объяснить, чего хочу",
+      ],
+      third_eye: [
+        "Я доверяю своей интуиции",
+        "Мне легко увидеть картину целиком",
+        "Я замечаю закономерности в жизни",
+        "Мне комфортно решать без полной информации",
+        "Я умею отличить интуицию от тревоги",
+      ],
+      crown: [
+        "Я чувствую связь с чем-то большим",
+        "У меня есть ощущение смысла",
+        "Я нахожу время для тишины",
+        "Мне знакомо благоговение перед жизнью",
+        "Мои дела связаны с чем-то важным",
+      ],
+    };
+
+    const SCALE = [
+      { v: 1, l: "не согласен" },
+      { v: 2, l: "скорее нет" },
+      { v: 3, l: "нейтрально" },
+      { v: 4, l: "скорее да" },
+      { v: 5, l: "согласен" },
+    ];
+
+    function LandingPage({ onNext }) {
+      return (
+        <div style={{ background: COLORS.bg }} className="min-h-screen flex flex-col">
+          <header className="max-w-5xl mx-auto flex items-center justify-center px-6 py-6 w-full">
+            <span className="font-display text-lg tracking-wide">Life Reset Lab</span>
+          </header>
+
+          <section className="relative max-w-3xl mx-auto px-6 pt-10 pb-20 text-center flex-1 flex items-center justify-center">
+            <div className="aura absolute left-1/2 top-8 -translate-x-1/2 rounded-full blur-3xl" style={{ width: 340, height: 340, background: `radial-gradient(circle, ${COLORS.goldSoft} 0%, transparent 70%)` }} />
+            <div className="relative">
+              <div className="flex items-center justify-center gap-2 mb-6">
+                {CHAKRAS.map((c, i) => (
+                  <span key={i} className="inline-block rounded-full" style={{ width: 6, height: 6, background: c.color, opacity: 0.85 }} />
+                ))}
+              </div>
+
+              <h1 className="font-display text-4xl md:text-5xl leading-tight" style={{ letterSpacing: "-0.01em" }}>
+                Тихое путешествие<br />к вашему внутреннему состоянию
+              </h1>
+
+              <p className="font-sans mt-6 text-base md:text-lg max-w-xl mx-auto" style={{ color: COLORS.muted }}>
+                15-минутный опросник по системе семи энергетических центров. На выходе — персональный отчёт о том, где вы сильны, а что требует внимания.
+              </p>
+
+              <div className="mt-9 flex flex-col items-center gap-3">
+                <button
+                  onClick={onNext}
+                  className="font-sans text-sm md:text-base px-7 py-3.5 rounded-full flex items-center gap-2 transition-transform hover:-translate-y-0.5"
+                  style={{ background: COLORS.ink, color: COLORS.card }}
+                >
+                  Активировать доступ
+                  <ArrowRight size={16} />
+                </button>
+                <span className="font-mono text-xs" style={{ color: COLORS.muted, letterSpacing: "0.02em" }}>
+                  инструмент саморефлексии
+                </span>
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    function ActivationPage({ onNext }) {
+      const [step, setStep] = useState(0);
+      const [code, setCode] = useState("");
+      const [email, setEmail] = useState("");
+
+      return (
+        <div style={{ background: COLORS.bg }} className="min-h-screen flex flex-col">
+          <header className="max-w-md mx-auto w-full flex items-center justify-center px-6 py-6">
+            <span className="font-display text-lg">Life Reset Lab</span>
+          </header>
+
+          <main className="flex-1 flex items-center justify-center px-6">
+            <div className="relative w-full max-w-sm">
+              <div className="aura absolute left-1/2 -top-10 -translate-x-1/2 rounded-full blur-3xl -z-0" style={{ width: 220, height: 220, background: `radial-gradient(circle, ${COLORS.goldSoft} 0%, transparent 70%)` }} />
+              <div className="relative rounded-3xl p-8" style={{ background: COLORS.card, boxShadow: "0 20px 60px -30px rgba(42,37,32,0.25)" }}>
+                {step === 0 && (
+                  <div className="rise">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center mb-5" style={{ background: COLORS.cardAlt, color: COLORS.gold }}>
+                      <KeyRound size={18} />
+                    </div>
+                    <h1 className="font-display text-2xl mb-2">Код доступа</h1>
+                    <p className="font-sans text-sm mb-6" style={{ color: COLORS.muted }}>
+                      Введите код, который пришёл после покупки доступа.
+                    </p>
+                    <input
+                      value={code}
+                      onChange={(e) => setCode(e.target.value.toUpperCase())}
+                      placeholder="RESET-XXXX-XXXX"
+                      className="font-mono w-full text-center text-sm py-3.5 rounded-2xl border tracking-widest"
+                      style={{ borderColor: COLORS.hairline, background: COLORS.bg, letterSpacing: "0.08em" }}
+                    />
+                    <button
+                      onClick={() => code.trim() && setStep(1)}
+                      className="mt-5 w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2 transition-transform hover:-translate-y-0.5"
+                      style={{ background: COLORS.ink, color: COLORS.card }}
+                    >
+                      Продолжить <ArrowRight size={15} />
+                    </button>
+                    <button
+                      onClick={() => setStep(1)}
+                      className="font-sans text-sm mt-5 w-full text-center underline underline-offset-4 decoration-1"
+                      style={{ color: COLORS.gold }}
+                    >
+                      Уже активировали код? Войти по email
+                    </button>
+                  </div>
+                )}
+
+                {step === 1 && (
+                  <div className="rise">
+                    <button
+                      onClick={() => setStep(0)}
+                      className="flex items-center gap-1 font-sans text-xs mb-5"
+                      style={{ color: COLORS.muted }}
+                    >
+                      <ArrowLeft size={13} /> назад
+                    </button>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center mb-5" style={{ background: COLORS.cardAlt, color: COLORS.gold }}>
+                      <Mail size={18} />
+                    </div>
+                    <h1 className="font-display text-2xl mb-2">Ваш email</h1>
+                    <p className="font-sans text-sm mb-6" style={{ color: COLORS.muted }}>
+                      Пришлём одноразовый код для входа.
+                    </p>
+                    <input
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="font-sans w-full text-sm py-3.5 px-4 rounded-2xl border"
+                      style={{ borderColor: COLORS.hairline, background: COLORS.bg }}
+                    />
+                    <button
+                      onClick={() => email.trim() && onNext()}
+                      className="mt-5 w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2 transition-transform hover:-translate-y-0.5"
+                      style={{ background: COLORS.ink, color: COLORS.card }}
+                    >
+                      Отправить код <ArrowRight size={15} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    function IntroductionPage({ onNext }) {
+      return (
+        <div style={{ background: COLORS.bg }} className="min-h-screen flex flex-col">
+          <header className="max-w-md mx-auto w-full flex items-center justify-center px-6 py-6">
+            <span className="font-display text-lg">Life Reset Lab</span>
+          </header>
+
+          <main className="flex-1 flex items-center justify-center px-6 py-8">
+            <div className="relative w-full max-w-sm">
+              <div className="aura absolute left-1/2 -top-6 -translate-x-1/2 rounded-full blur-3xl -z-0" style={{ width: 260, height: 260, background: `radial-gradient(circle, ${COLORS.goldSoft} 0%, transparent 70%)` }} />
+
+              <div className="relative rise text-center">
+                <h1 className="font-display text-3xl leading-tight mb-3">Прежде чем начать</h1>
+                <p className="font-sans text-sm leading-relaxed max-w-xs mx-auto" style={{ color: COLORS.muted }}>
+                  Найдите спокойное место. Отвечайте первым, что приходит в голову — здесь нет правильных или неправильных ответов.
+                </p>
+
+                <div className="flex items-center justify-center gap-2 my-8 flex-wrap">
+                  {CHAKRAS.map((c, i) => (
+                    <span key={i} className="inline-block rounded-full" style={{ width: 9, height: 9, background: c.color }} />
+                  ))}
+                </div>
+
+                <div className="rounded-3xl p-6 text-left" style={{ background: COLORS.card }}>
+                  <div className="flex items-start gap-3 mb-5">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: COLORS.cardAlt, color: COLORS.gold }}>
+                      <Clock size={15} />
+                    </div>
+                    <div>
+                      <p className="font-sans text-sm font-medium">Около 5 минут в этом демо</p>
+                      <p className="font-sans text-xs mt-0.5" style={{ color: COLORS.muted }}>В полной версии — 210 вопросов</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ background: COLORS.cardAlt, color: COLORS.gold }}>
+                      <Sparkles size={15} />
+                    </div>
+                    <div>
+                      <p className="font-sans text-sm font-medium">Личный профиль на выходе</p>
+                      <p className="font-sans text-xs mt-0.5" style={{ color: COLORS.muted }}>По каждому из семи центров отдельно</p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={onNext}
+                  className="mt-7 w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2 transition-transform hover:-translate-y-0.5"
+                  style={{ background: COLORS.ink, color: COLORS.card }}
+                >
+                  Начать путешествие <ArrowRight size={15} />
+                </button>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    function QuestionnairePage({ onNext }) {
+      const [chakraIndex, setChakraIndex] = useState(0);
+      const [phase, setPhase] = useState("intro");
+      const [qIndex, setQIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+
+      const chakra = CHAKRAS[chakraIndex];
+      const questions = QUESTIONS_BY_CHAKRA[chakra.key];
+      const Icon = chakra.icon;
+      const totalQuestions = useMemo(() => Object.values(QUESTIONS_BY_CHAKRA).reduce((s, q) => s + q.length, 0), []);
+      const answeredCount = Object.keys(answers).length;
+      const overallProgress = Math.round((answeredCount / totalQuestions) * 100);
+      const blockProgress = Math.round(((qIndex + 1) / questions.length) * 100);
+      const currentKey = `${chakra.key}-${qIndex}`;
+
+      const selectAnswer = (val) => {
+        const next = { ...answers, [currentKey]: val };
+        setAnswers(next);
+        setTimeout(() => {
+          if (qIndex < questions.length - 1) {
+            setQIndex(qIndex + 1);
+          } else {
+            setPhase("transition");
+          }
+        }, 200);
+      };
+
+      const goNextChakra = () => {
+        if (chakraIndex < CHAKRAS.length - 1) {
+          setChakraIndex(chakraIndex + 1);
+          setQIndex(0);
+          setPhase("intro");
+        } else {
+          onNext({ answers });
+        }
+      };
+
+      return (
+        <div style={{ background: COLORS.bg }} className="min-h-screen flex flex-col">
+          <header className="max-w-md mx-auto w-full px-6 pt-6 pb-2">
+            <div className="flex items-center justify-between mb-3">
+              <span className="font-display text-base">Life Reset Lab</span>
+              <span className="font-mono text-xs" style={{ color: COLORS.muted }}>{overallProgress}%</span>
+            </div>
+            <div className="w-full h-1 rounded-full" style={{ background: COLORS.hairline }}>
+              <div className="h-1 rounded-full transition-all duration-500" style={{ width: `${overallProgress}%`, background: COLORS.gold }} />
+            </div>
+            <div className="flex items-center gap-1.5 mt-3">
+              {CHAKRAS.map((c, i) => (
+                <span key={c.key} className="h-1 flex-1 rounded-full transition-colors duration-300" style={{ background: i < chakraIndex ? c.color : i === chakraIndex ? COLORS.gold : COLORS.hairline }} />
+              ))}
+            </div>
+          </header>
+
+          <main className="flex-1 flex items-center justify-center px-6 py-6">
+            <div className="w-full max-w-sm">
+              {phase === "intro" && (
+                <div className="rise text-center">
+                  <p className="font-mono text-xs mb-4" style={{ color: COLORS.muted, letterSpacing: "0.04em" }}>
+                    БЛОК {chakraIndex + 1} ИЗ {CHAKRAS.length}
+                  </p>
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: `${chakra.color}1A`, color: chakra.color }}>
+                    <Icon size={26} />
+                  </div>
+                  <h1 className="font-display text-2xl mb-1">{chakra.name}</h1>
+                  <p className="font-mono text-xs mb-4" style={{ color: chakra.color }}>{chakra.trad}</p>
+                  <button
+                    onClick={() => setPhase("question")}
+                    className="w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2 transition-transform hover:-translate-y-0.5 mt-6"
+                    style={{ background: COLORS.ink, color: COLORS.card }}
+                  >
+                    Продолжить <ArrowRight size={15} />
+                  </button>
+                </div>
+              )}
+
+              {phase === "question" && (
+                <div className="pop">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-xs" style={{ color: chakra.color }}>{chakra.name}</span>
+                    <span className="font-mono text-xs" style={{ color: COLORS.muted }}>{qIndex + 1} / {questions.length}</span>
+                  </div>
+                  <div className="w-full h-1 rounded-full mb-6" style={{ background: COLORS.hairline }}>
+                    <div className="h-1 rounded-full transition-all duration-300" style={{ width: `${blockProgress}%`, background: chakra.color }} />
+                  </div>
+
+                  <div className="rounded-3xl p-7" style={{ background: COLORS.card }}>
+                    <h2 className="font-display text-xl leading-snug mb-8">{questions[qIndex]}</h2>
+                    <div className="flex justify-between items-end gap-1.5">
+                      {SCALE.map((s) => (
+                        <button key={s.v} onClick={() => selectAnswer(s.v)} className="flex-1 flex flex-col items-center gap-2 group">
+                          <span
+                            className="rounded-full flex items-center justify-center transition-all group-hover:-translate-y-0.5"
+                            style={{
+                              width: 15 + s.v * 3,
+                              height: 15 + s.v * 3,
+                              background: answers[currentKey] === s.v ? chakra.color : COLORS.cardAlt,
+                              border: `1px solid ${answers[currentKey] === s.v ? chakra.color : COLORS.hairline}`,
+                            }}
+                          >
+                            {answers[currentKey] === s.v && <Check size={12} color="#fff" />}
+                          </span>
+                          <span className="font-mono text-[9px] text-center leading-tight" style={{ color: COLORS.muted }}>{s.l}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {phase === "transition" && (
+                <div className="pop text-center">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: `${chakra.color}1A`, color: chakra.color }}>
+                    <Check size={26} />
+                  </div>
+                  <h2 className="font-display text-xl mb-2">{chakra.name} — готово</h2>
+                  <button
+                    onClick={goNextChakra}
+                    className="w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2 transition-transform hover:-translate-y-0.5 mt-6"
+                    style={{ background: COLORS.ink, color: COLORS.card }}
+                  >
+                    {chakraIndex < CHAKRAS.length - 1 ? "Следующий центр" : "Завершить"} <ArrowRight size={15} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    function ResultDashboardPage({ answers, onRestart }) {
+      const mockResults = {
+        root: 68,
+        sacral: 82,
+        solar: 75,
+        heart: 71,
+        throat: 64,
+        third_eye: 78,
+        crown: 85,
+      };
+
+      const overallScore = Math.round(Object.values(mockResults).reduce((a, b) => a + b) / 7);
+
+      return (
+        <div style={{ background: COLORS.bg }} className="min-h-screen font-sans">
+          <header className="max-w-2xl mx-auto px-6 pt-6 pb-4">
+            <span className="font-display text-base">Life Reset Lab</span>
+          </header>
+
+          <main className="max-w-2xl mx-auto px-6 pb-12">
+            <div className="text-center mb-10">
+              <h1 className="font-display text-4xl leading-tight mb-3">Ваш профиль готов</h1>
+              <p className="font-sans text-sm" style={{ color: COLORS.muted }}>
+                Анализ ваших ответов по семи измерениям
+              </p>
+            </div>
+
+            <div className="rounded-3xl p-8 mb-8" style={{ background: COLORS.card }}>
+              <div className="text-center mb-8">
+                <p className="font-mono text-xs mb-3" style={{ color: COLORS.muted }}>ОБЩИЙ ИНДЕКС</p>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="font-display text-6xl">{overallScore}</span>
+                  <span className="font-display text-3xl" style={{ color: COLORS.muted }}>/100</span>
+                </div>
+              </div>
+
+              <div style={{ borderColor: COLORS.hairline }} className="border-t pt-6">
+                <p className="font-display text-lg leading-snug text-center">
+                  Вы открыты к изменениям и хорошо понимаете свои эмоции, но иногда сомневаетесь в том, что говорите правду вслух.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl p-8 mb-8" style={{ background: COLORS.card }}>
+              <p className="font-mono text-xs text-center mb-6" style={{ color: COLORS.muted }}>ПРОФИЛЬ ПО СЕМИ ЦЕНТРАМ</p>
+              <div className="grid grid-cols-7 gap-2">
+                {CHAKRAS.map((c, i) => (
+                  <div key={i} className="text-center">
+                    <p className="font-mono text-xs mb-2 leading-tight" style={{ color: c.color }}>{c.name}</p>
+                    <div className="rounded-2xl py-2 px-1" style={{ background: `${c.color}15` }}>
+                      <p className="font-display text-lg">{mockResults[c.key]}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl p-8 mb-8 border-2" style={{ background: COLORS.card, borderColor: COLORS.gold }}>
+              <p className="font-mono text-xs mb-3" style={{ color: COLORS.gold }}>УГЛУБИТЬ ЗНАНИЯ</p>
+              <h3 className="font-display text-lg mb-2">Энергетический путеводитель</h3>
+              <p className="font-sans text-sm mb-4" style={{ color: COLORS.muted }}>
+                Полный интерактивный курс с практиками для развития каждого центра.
+              </p>
+              <a href="https://example.com/course" target="_blank" className="w-full font-sans text-sm py-3 rounded-full flex items-center justify-center gap-2" style={{ background: COLORS.gold, color: COLORS.card, textDecoration: 'none', display: 'inline-flex', justifyContent: 'center' }}>
+                Узнать подробнее
+                <ArrowRight size={15} />
+              </a>
+            </div>
+
+            <div className="space-y-3">
+              <button className="w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2" style={{ background: COLORS.ink, color: COLORS.card }}>
+                Подробный отчёт <ArrowRight size={15} />
+              </button>
+              <button className="w-full font-sans text-sm py-3.5 rounded-full" style={{ background: COLORS.card, color: COLORS.ink, border: `1px solid ${COLORS.hairline}` }}>
+                Исследовать каждый центр
+              </button>
+              <button className="w-full font-sans text-sm py-3.5 rounded-full flex items-center justify-center gap-2" style={{ background: COLORS.card, color: COLORS.ink, border: `1px solid ${COLORS.hairline}` }}>
+                <Download size={15} /> Скачать PDF
+              </button>
+              <button onClick={onRestart} className="w-full font-sans text-sm py-3.5 rounded-full" style={{ background: COLORS.cardAlt, color: COLORS.ink }}>
+                Начать заново
+              </button>
+            </div>
+
+            <p className="font-mono text-xs text-center mt-8" style={{ color: COLORS.muted }}>
+              Это не диагноз, это карта для вашего личного роста.
+            </p>
+          </main>
+        </div>
+      );
+    }
+
+    function App() {
+      const [screen, setScreen] = useState("landing");
+      const [answers, setAnswers] = useState(null);
+
+      return (
+        <>
+          {screen === "landing" && <LandingPage onNext={() => setScreen("activation")} />}
+          {screen === "activation" && <ActivationPage onNext={() => setScreen("introduction")} />}
+          {screen === "introduction" && <IntroductionPage onNext={() => setScreen("questionnaire")} />}
+          {screen === "questionnaire" && <QuestionnairePage onNext={(data) => { setAnswers(data); setScreen("results"); }} />}
+          {screen === "results" && <ResultDashboardPage answers={answers} onRestart={() => setScreen("landing")} />}
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
