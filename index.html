@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Reset Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: #F7F3EC;
+      color: #2A2520;
+    }
+
+    .font-display {
+      font-family: 'Fraunces', serif;
+    }
+
+    .font-mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .screen {
+      display: none;
+      min-height: 100vh;
+      background: #F7F3EC;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header {
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 18px;
+      font-family: 'Fraunces', serif;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #2A2520;
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #8B8172;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    button {
+      background: #2A2520;
+      color: #FFFDF9;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 500;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .card {
+      background: #FFFDF9;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      margin: 20px auto;
+    }
+
+    .scale-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      margin: 30px 0;
+    }
+
+    .scale-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #E4D8C2;
+      background: #F1EADB;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 12px;
+    }
+
+    .scale-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .scale-btn.active {
+      border-color: #A9824C;
+      background: #A9824C;
+      color: white;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: #E4D8C2;
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 10px 0;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #A9824C;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: #8B8172;
+      margin-top: 8px;
+    }
+
+    .chakra-label {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #E4D8C2;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: 'Work Sans', sans-serif;
+      margin-bottom: 16px;
+    }
+
+    .result-index {
+      font-family: 'Fraunces', serif;
+      font-size: 64px;
+      margin: 20px 0 10px;
+    }
+
+    a {
+      background: #A9824C;
+      color: #FFFDF9;
+      padding: 12px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      font-family: 'Work Sans', sans-serif;
+      transition: transform 0.2s;
+    }
+
+    a:hover {
+      transform: translateY(-2px);
+    }
+
+    .step-info {
+      font-size: 12px;
+      color: #8B8172;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCREEN 1: LANDING -->
+  <div id="landing" class="screen active">
+    <header>Life Reset Lab</header>
+    <div class="container">
+      <div>
+        <h1 class="font-display">Life Reset Lab</h1>
+        <p>Откройте свой внутренний профиль за 15 минут</p>
+        <button onclick="showScreen('questionnaire')">Начать тест</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: QUESTIONNAIRE -->
+  <div id="questionnaire" class="screen">
+    <header>
+      <div>Life Reset Lab</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div class="progress-text" id="progressText">0%</div>
+    </header>
+    
+    <div class="container">
+      <div class="card">
+        <div class="chakra-label" id="chakraLabel">Опора</div>
+        <h2 class="font-display" id="questionText">Вопрос загружается...</h2>
+        
+        <div class="scale-buttons" id="scaleButtons"></div>
+        
+        <div class="step-info" id="stepInfo">Центр 1 из 7 · Вопрос 1 из 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: RESULTS -->
+  <div id="results" class="screen">
+    <header>Life Reset Lab</header>
+    <div class="container">
+      <div class="card">
+        <h1 class="font-display">Спасибо!</h1>
+        <p>Ваш профиль готов</p>
+        
+        <div style="background: #F1EADB; padding: 20px; border-radius: 16px; margin: 20px 0;">
+          <div class="result-index">74</div>
+          <p style="margin: 0; font-size: 14px;">Ваш общий индекс из 100</p>
+        </div>
+        
+        <p>Вы хорошо понимаете свои эмоции, но иногда сомневаетесь в том, что говорите правду вслух.</p>
+        
+        <a href="https://example.com/course" target="_blank">Купить полный курс</a>
+        
+        <button onclick="showScreen('landing')" style="margin-top: 20px; background: #F1EADB; color: #2A2520;">Начать заново</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CHAKRAS = [
+      { key: "root", name: "Опора", color: "#A6553D" },
+      { key: "sacral", name: "Чувства", color: "#BD7C3E" },
+      { key: "solar", name: "Воля", color: "#BFA24C" },
+      { key: "heart", name: "Любовь", color: "#7C8F6B" },
+      { key: "throat", name: "Голос", color: "#6C8798" },
+      { key: "third_eye", name: "Интуиция", color: "#5B6389" },
+      { key: "crown", name: "Смысл", color: "#8C7F9B" },
+    ];
+
+    const QUESTIONS = [
+      "Я чувствую себя в безопасности",
+      "Мне легко находить опору",
+      "Я доверяю жизни",
+    ];
+
+    let currentChakra = 0;
+    let currentQuestion = 0;
+    let answers = {};
+
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+      
+      if (screenId === 'questionnaire') {
+        updateQuestionDisplay();
+      }
+    }
+
+    function updateQuestionDisplay() {
+      const chakra = CHAKRAS[currentChakra];
+      document.getElementById('chakraLabel').textContent = chakra.name;
+      document.getElementById('chakraLabel').style.color = chakra.color;
+      document.getElementById('questionText').textContent = QUESTIONS[currentQuestion];
+      
+      // Создаём кнопки шкалы
+      const scaleButtons = document.getElementById('scaleButtons');
+      scaleButtons.innerHTML = '';
+      
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'scale-btn';
+        btn.textContent = i;
+        btn.style.width = (20 + i * 8) + 'px';
+        btn.style.height = (20 + i * 8) + 'px';
+        
+        const answerKey = `${chakra.key}-${currentQuestion}`;
+        if (answers[answerKey] === i) {
+          btn.classList.add('active');
+          btn.style.borderColor = chakra.color;
+          btn.style.background = chakra.color;
+        }
+        
+        btn.onclick = () => selectAnswer(i);
+        scaleButtons.appendChild(btn);
+      }
+      
+      // Обновляем прогресс
+      const total = CHAKRAS.length * QUESTIONS.length;
+      const answered = Object.keys(answers).length;
+      const progress = Math.round((answered / total) * 100);
+      
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').textContent = progress + '%';
+      document.getElementById('stepInfo').textContent = `Центр ${currentChakra + 1} из ${CHAKRAS.length} · Вопрос ${currentQuestion + 1} из ${QUESTIONS.length}`;
+    }
+
+    function selectAnswer(value) {
+      const chakra = CHAKRAS[currentChakra];
+      answers[`${chakra.key}-${currentQuestion}`] = value;
+      
+      if (currentQuestion < QUESTIONS.length - 1) {
+        currentQuestion++;
+      } else if (currentChakra < CHAKRAS.length - 1) {
+        currentChakra++;
+        currentQuestion = 0;
+      } else {
+        showScreen('results');
+        return;
+      }
+      
+      updateQuestionDisplay();
+    }
+  </script>
+
+</body>
+</html>
