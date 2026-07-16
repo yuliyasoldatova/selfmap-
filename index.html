@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Reset Lab</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: #F7F3EC;
+      color: #2A2520;
+    }
+    
+    .font-display {
+      font-family: 'Fraunces', serif;
+    }
+    
+    .font-mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .aura {
+      animation: breathe 7s ease-in-out infinite;
+    }
+    
+    @keyframes breathe {
+      0%, 100% { opacity: 0.28; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.07); }
+    }
+    
+    .rise {
+      animation: rise 0.5s ease both;
+    }
+    
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .pop {
+      animation: pop 0.4s ease both;
+    }
+    
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .aura, .rise, .pop {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    const { useState, useMemo } = React;
+    const e = React.createElement;
+
+    const COLORS = {
+      bg: "#F7F3EC",
+      card: "#FFFDF9",
+      cardAlt: "#F1EADB",
+      ink: "#2A2520",
+      muted: "#8B8172",
+      gold: "#A9824C",
+      goldSoft: "#C7A66C",
+      hairline: "#E4D8C2",
+    };
+
+    const CHAKRAS = [
+      { key: "root", name: "Опора", trad: "Корневая чакра", color: "#A6553D" },
+      { key: "sacral", name: "Чувства и удовольствие", trad: "Сакральная чакра", color: "#BD7C3E" },
+      { key: "solar", name: "Уверенность и воля", trad: "Чакра солнечного сплетения", color: "#BFA24C" },
+      { key: "heart", name: "Любовь и связь", trad: "Сердечная чакра", color: "#7C8F6B" },
+      { key: "throat", name: "Голос и правда", trad: "Горловая чакра", color: "#6C8798" },
+      { key: "third_eye", name: "Интуиция и ясность", trad: "Чакра третьего глаза", color: "#5B6389" },
+      { key: "crown", name: "Смысл и связь", trad: "Коронная чакра", color: "#8C7F9B" },
+    ];
+
+    const QUESTIONS_BY_CHAKRA = {
+      root: [
+        "Я чувствую себя финансово защищённым(ой)",
+        "Моё тело ощущается как надёжное место",
+        "Мне легко найти опору в трудные периоды",
+      ],
+      sacral: [
+        "Я разрешаю себе получать удовольствие без вины",
+        "Мне легко выражать свои эмоции",
+        "Я чувствую творческий поток в жизни",
+      ],
+      solar: [
+        "Я уверенно принимаю решения",
+        "Мне комфортно отстаивать свои границы",
+        "Я доверяю своей внутренней силе",
+      ],
+      heart: [
+        "Я легко даю и принимаю любовь",
+        "Я умею прощать — себя и других",
+        "Мои отношения ощущаются искренними",
+      ],
+      throat: [
+        "Мне легко говорить то, что я думаю",
+        "Меня слышат в важных разговорах",
+        "Я говорю правду, даже когда неудобно",
+      ],
+      third_eye: [
+        "Я доверяю своей интуиции",
+        "Мне легко увидеть картину целиком",
+        "Я замечаю закономерности в жизни",
+      ],
+      crown: [
+        "Я чувствую связь с чем-то большим",
+        "У меня есть ощущение смысла",
+        "Я нахожу время для тишины",
+      ],
+    };
+
+    const SCALE = [
+      { v: 1, l: "не согласен" },
+      { v: 2, l: "скорее нет" },
+      { v: 3, l: "нейтрально" },
+      { v: 4, l: "скорее да" },
+      { v: 5, l: "согласен" },
+    ];
+
+    function LandingPage({ onNext }) {
+      return e('div', { style: { background: COLORS.bg } },
+        e('header', { style: { textAlign: 'center', padding: '24px' } },
+          e('span', { className: 'font-display', style: { fontSize: '20px' } }, 'Life Reset Lab')
+        ),
+        e('main', { style: { textAlign: 'center', padding: '40px 24px', maxWidth: '600px', margin: '0 auto' } },
+          e('h1', { className: 'font-display', style: { fontSize: '48px', marginBottom: '24px', lineHeight: '1.2' } },
+            'Тихое путешествие к вашему внутреннему состоянию'
+          ),
+          e('p', { style: { color: COLORS.muted, marginBottom: '32px', fontSize: '16px' } },
+            '15-минутный опросник по системе семи энергетических центров.'
+          ),
+          e('button', {
+            onClick: onNext,
+            style: {
+              background: COLORS.ink,
+              color: COLORS.card,
+              padding: '12px 28px',
+              borderRadius: '999px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontFamily: "'Work Sans', sans-serif",
+            }
+          }, 'Активировать доступ')
+        )
+      );
+    }
+
+    function ActivationPage({ onNext }) {
+      const [step, setStep] = useState(0);
+      const [email, setEmail] = useState("");
+
+      return e('div', { style: { background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' } },
+        e('header', { style: { textAlign: 'center', padding: '24px' } },
+          e('span', { className: 'font-display', style: { fontSize: '18px' } }, 'Life Reset Lab')
+        ),
+        e('main', { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' } },
+          e('div', { style: { maxWidth: '400px', width: '100%', background: COLORS.card, borderRadius: '24px', padding: '32px' } },
+            step === 0 ? e('div', null,
+              e('h2', { className: 'font-display', style: { fontSize: '24px', marginBottom: '16px' } }, 'Введите email'),
+              e('input', {
+                type: 'email',
+                value: email,
+                onChange: (evt) => setEmail(evt.target.value),
+                placeholder: 'you@example.com',
+                style: {
+                  width: '100%',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  border: `1px solid ${COLORS.hairline}`,
+                  marginBottom: '16px',
+                  fontFamily: "'Work Sans', sans-serif",
+                  fontSize: '14px',
+                }
+              }),
+              e('button', {
+                onClick: () => email.trim() && setStep(1),
+                style: {
+                  width: '100%',
+                  background: COLORS.ink,
+                  color: COLORS.card,
+                  padding: '12px',
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontFamily: "'Work Sans', sans-serif",
+                }
+              }, 'Продолжить')
+            ) : e('div', null,
+              e('h2', { className: 'font-display', style: { fontSize: '24px', marginBottom: '16px' } }, 'Введите код из письма'),
+              e('input', {
+                type: 'text',
+                placeholder: '000000',
+                style: {
+                  width: '100%',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  border: `1px solid ${COLORS.hairline}`,
+                  marginBottom: '16px',
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '14px',
+                  textAlign: 'center',
+                }
+              }),
+              e('button', {
+                onClick: onNext,
+                style: {
+                  width: '100%',
+                  background: COLORS.ink,
+                  color: COLORS.card,
+                  padding: '12px',
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontFamily: "'Work Sans', sans-serif",
+                }
+              }, 'Войти')
+            )
+          )
+        )
+      );
+    }
+
+    function IntroductionPage({ onNext }) {
+      return e('div', { style: { background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' } },
+        e('header', { style: { textAlign: 'center', padding: '24px' } },
+          e('span', { className: 'font-display', style: { fontSize: '18px' } }, 'Life Reset Lab')
+        ),
+        e('main', { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' } },
+          e('div', { style: { maxWidth: '400px', width: '100%', textAlign: 'center' } },
+            e('h1', { className: 'font-display', style: { fontSize: '32px', marginBottom: '16px' } }, 'Прежде чем начать'),
+            e('p', { style: { color: COLORS.muted, marginBottom: '32px', fontSize: '14px' } },
+              'Найдите спокойное место. Отвечайте первым, что приходит в голову.'
+            ),
+            e('button', {
+              onClick: onNext,
+              style: {
+                width: '100%',
+                background: COLORS.ink,
+                color: COLORS.card,
+                padding: '12px',
+                borderRadius: '999px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontFamily: "'Work Sans', sans-serif",
+              }
+            }, 'Начать путешествие')
+          )
+        )
+      );
+    }
+
+    function QuestionnairePage({ onNext }) {
+      const [chakraIndex, setChakraIndex] = useState(0);
+      const [qIndex, setQIndex] = useState(0);
+      const [answers, setAnswers] = useState({});
+
+      const chakra = CHAKRAS[chakraIndex];
+      const questions = QUESTIONS_BY_CHAKRA[chakra.key];
+
+      const selectAnswer = (val) => {
+        const next = { ...answers, [`${chakra.key}-${qIndex}`]: val };
+        setAnswers(next);
+        setTimeout(() => {
+          if (qIndex < questions.length - 1) {
+            setQIndex(qIndex + 1);
+          } else if (chakraIndex < CHAKRAS.length - 1) {
+            setChakraIndex(chakraIndex + 1);
+            setQIndex(0);
+          } else {
+            onNext(answers);
+          }
+        }, 200);
+      };
+
+      const totalQuestions = Object.values(QUESTIONS_BY_CHAKRA).reduce((s, q) => s + q.length, 0);
+      const answeredCount = Object.keys(answers).length;
+      const progress = Math.round((answeredCount / totalQuestions) * 100);
+
+      return e('div', { style: { background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' } },
+        e('header', { style: { padding: '24px', maxWidth: '500px', margin: '0 auto', width: '100%' } },
+          e('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
+            e('span', { className: 'font-display', style: { fontSize: '16px' } }, 'Life Reset Lab'),
+            e('span', { className: 'font-mono', style: { fontSize: '12px', color: COLORS.muted } }, `${progress}%`)
+          ),
+          e('div', { style: { width: '100%', height: '4px', background: COLORS.hairline, borderRadius: '999px', overflow: 'hidden' } },
+            e('div', { style: { height: '100%', background: COLORS.gold, width: `${progress}%`, transition: 'width 0.5s ease' } })
+          )
+        ),
+        e('main', { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' } },
+          e('div', { style: { maxWidth: '400px', width: '100%', background: COLORS.card, borderRadius: '24px', padding: '32px' } },
+            e('h2', { className: 'font-display', style: { fontSize: '20px', marginBottom: '24px' } }, questions[qIndex]),
+            e('div', { style: { display: 'flex', gap: '12px', justifyContent: 'space-between' } },
+              SCALE.map((s) =>
+                e('button', {
+                  key: s.v,
+                  onClick: () => selectAnswer(s.v),
+                  style: {
+                    flex: 1,
+                    width: `${15 + s.v * 3}px`,
+                    height: `${15 + s.v * 3}px`,
+                    borderRadius: '50%',
+                    background: answers[`${chakra.key}-${qIndex}`] === s.v ? chakra.color : COLORS.cardAlt,
+                    border: `1px solid ${COLORS.hairline}`,
+                    cursor: 'pointer',
+                  }
+                })
+              )
+            )
+          )
+        )
+      );
+    }
+
+    function ResultsPage({ onRestart }) {
+      return e('div', { style: { background: COLORS.bg, minHeight: '100vh' } },
+        e('header', { style: { textAlign: 'center', padding: '24px' } },
+          e('span', { className: 'font-display', style: { fontSize: '18px' } }, 'Life Reset Lab')
+        ),
+        e('main', { style: { maxWidth: '600px', margin: '0 auto', padding: '40px 24px' } },
+          e('h1', { className: 'font-display', style: { fontSize: '36px', textAlign: 'center', marginBottom: '32px' } }, 'Результат готов!'),
+          e('div', { style: { background: COLORS.card, borderRadius: '24px', padding: '32px', textAlign: 'center', marginBottom: '32px' } },
+            e('p', { className: 'font-mono', style: { fontSize: '12px', color: COLORS.muted, marginBottom: '16px' } }, 'ОБЩИЙ ИНДЕКС'),
+            e('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '8px' } },
+              e('span', { className: 'font-display', style: { fontSize: '64px' } }, '74'),
+              e('span', { className: 'font-display', style: { fontSize: '32px', color: COLORS.muted } }, '/100')
+            )
+          ),
+          e('div', { style: { background: COLORS.card, borderRadius: '24px', padding: '24px', marginBottom: '32px' } },
+            e('h2', { className: 'font-display', style: { fontSize: '18px', marginBottom: '16px' } }, 'Ваши результаты'),
+            e('p', { style: { color: COLORS.muted, fontSize: '14px', lineHeight: '1.6' } },
+              'Вы хорошо понимаете свои эмоции, открыты к изменениям, но иногда сомневаетесь в том, что говорите правду вслух.'
+            )
+          ),
+          e('div', { style: { display: 'flex', flexDirection: 'column', gap: '12px' } },
+            e('button', {
+              onClick: onRestart,
+              style: {
+                width: '100%',
+                background: COLORS.ink,
+                color: COLORS.card,
+                padding: '12px',
+                borderRadius: '999px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontFamily: "'Work Sans', sans-serif",
+              }
+            }, 'Начать заново'),
+            e('a', {
+              href: 'https://example.com/course',
+              target: '_blank',
+              style: {
+                width: '100%',
+                background: COLORS.gold,
+                color: COLORS.card,
+                padding: '12px',
+                borderRadius: '999px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontFamily: "'Work Sans', sans-serif",
+                textDecoration: 'none',
+                display: 'block',
+                textAlign: 'center',
+              }
+            }, 'Купить полный курс')
+          )
+        )
+      );
+    }
+
+    function App() {
+      const [screen, setScreen] = useState("landing");
+
+      return e(React.Fragment, null,
+        screen === "landing" && LandingPage({ onNext: () => setScreen("activation") }),
+        screen === "activation" && ActivationPage({ onNext: () => setScreen("introduction") }),
+        screen === "introduction" && IntroductionPage({ onNext: () => setScreen("questionnaire") }),
+        screen === "questionnaire" && QuestionnairePage({ onNext: () => setScreen("results") }),
+        screen === "results" && ResultsPage({ onRestart: () => setScreen("landing") })
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(App());
+  </script>
+</body>
+</html>
