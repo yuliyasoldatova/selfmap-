@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>What’s Draining Your Energy? | Yuliya Soldatova</title>
+  <meta
+    name="description"
+    content="Take a thoughtful self-discovery assessment to identify what may be draining your energy and receive a personalized Energy Profile."
+  />
+  <meta name="theme-color" content="#F8F5F0" />
+
+  <meta property="og:title" content="What’s Draining Your Energy?" />
+  <meta
+    property="og:description"
+    content="A free 49-question self-discovery assessment by Yuliya Soldatova."
+  />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --ivory: #F8F5F0;
+      --cream: #F2ECE4;
+      --sand: #E8DDD1;
+      --gold: #C9A96A;
+      --gold-light: #D8BD83;
+      --gold-dark: #A8864C;
+      --text: #3B312C;
+      --text-soft: #6F6257;
+      --sage: #7D8B76;
+      --sage-light: #A8B49C;
+      --sage-pale: #DCE4D6;
+      --line: #DDD6CE;
+      --white: #FFFFFF;
+      --shadow: 0 24px 70px rgba(78, 60, 43, 0.10);
+      --shadow-soft: 0 12px 35px rgba(78, 60, 43, 0.08);
+      --radius-xl: 32px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --transition: 220ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(216, 189, 131, 0.15), transparent 34%),
+        radial-gradient(circle at 90% 85%, rgba(125, 139, 118, 0.12), transparent 32%),
+        var(--ivory);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-bar {
+      width: min(1120px, 100%);
+      margin: 0 auto 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(168, 134, 76, 0.38);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--gold-dark);
+      background: rgba(255, 255, 255, 0.52);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      letter-spacing: -2px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand-name {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      display: block;
+      color: var(--text-soft);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .privacy-note {
+      color: var(--text-soft);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .app {
+      width: min(1120px, 100%);
+      margin: auto;
+    }
+
+    .screen {
+      display: none;
+      animation: fadeUp 420ms ease both;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(201, 169, 106, 0.22);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .hero-card {
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      min-height: 650px;
+    }
+
+    .hero-copy {
+      padding: clamp(34px, 6vw, 78px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--gold-dark);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.08;
+      font-weight: 500;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: clamp(46px, 7.2vw, 86px);
+      letter-spacing: -0.045em;
+      max-width: 760px;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(34px, 5vw, 58px);
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin-bottom: 12px;
+      font-size: clamp(26px, 3vw, 38px);
+    }
+
+    .hero-lead {
+      margin: 0 0 28px;
+      color: var(--text-soft);
+      font-size: clamp(17px, 2vw, 21px);
+      max-width: 680px;
+    }
+
+    .trust-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 18px;
+      margin: 0 0 34px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .trust-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-soft);
+      font-size: 15px;
+    }
+
+    .trust-list li::before {
+      content: "✓";
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--gold-dark);
+      background: rgba(216, 189, 131, 0.22);
+      font-weight: 800;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      min-height: 54px;
+      padding: 14px 24px;
+      border: 0;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-decoration: none;
+      font-weight: 750;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: var(--white);
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      box-shadow: 0 14px 30px rgba(168, 134, 76, 0.24);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 18px 36px rgba(168, 134, 76, 0.30);
+    }
+
+    .btn-secondary {
+      color: var(--gold-dark);
+      border: 1px solid rgba(168, 134, 76, 0.48);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .btn-ghost {
+      padding-inline: 10px;
+      color: var(--text-soft);
+      background: transparent;
+    }
+
+    .hero-art {
+      min-height: 100%;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(145deg, rgba(232, 221, 209, 0.58), rgba(220, 228, 214, 0.72));
+    }
+
+    .hero-art::before,
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+
+    .hero-art::before {
+      width: 420px;
+      height: 420px;
+      top: -120px;
+      right: -120px;
+      background: rgba(216, 189, 131, 0.34);
+    }
+
+    .hero-art::after {
+      width: 360px;
+      height: 360px;
+      bottom: -120px;
+      left: -80px;
+      background: rgba(125, 139, 118, 0.22);
+    }
+
+    .energy-orbit {
+      width: min(390px, 76%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(168, 134, 76, 0.38);
+      background: rgba(248, 245, 240, 0.56);
+      box-shadow:
+        0 0 0 26px rgba(255, 255, 255, 0.22),
+        0 0 0 52px rgba(201, 169, 106, 0.08);
+    }
+
+    .energy-orbit::before,
+    .energy-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 14%;
+      border-radius: 50%;
+      border: 1px solid rgba(168, 134, 76, 0.26);
+    }
+
+    .energy-orbit::after {
+      inset: 30%;
+      background: radial-gradient(circle, rgba(216, 189, 131, 0.40), rgba(255, 255, 255, 0.12));
+      box-shadow: 0 0 55px rgba(201, 169, 106, 0.24);
+    }
+
+    .orbit-copy {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 26px;
+    }
+
+    .orbit-copy strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      font-weight: 500;
+    }
+
+    .orbit-copy span {
+      color: var(--text-soft);
+      font-size: 14px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+
+    .quiz-card {
+      padding: clamp(24px, 4vw, 52px);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .quiz-top {
+      margin-bottom: 34px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      margin-top: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--sage-light));
+      transition: width 360ms ease;
+    }
+
+    .question-wrap {
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .question-number {
+      margin-bottom: 14px;
+      color: var(--gold-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .question-text {
+      margin: 0 0 26px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(29px, 4.4vw, 47px);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+
+    .answers {
+      display: grid;
+      gap: 12px;
+    }
+
+    .answer {
+      width: 100%;
+      padding: 17px 18px;
+      border: 1px solid rgba(221, 214, 206, 0.96);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      background: rgba(248, 245, 240, 0.66);
+      text-align: left;
+      transition:
+        border var(--transition),
+        transform var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+    }
+
+    .answer:hover,
+    .answer:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(168, 134, 76, 0.52);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow-soft);
+      outline: none;
+    }
+
+    .answer.selected {
+      border-color: var(--gold);
+      background: rgba(216, 189, 131, 0.18);
+      box-shadow: 0 0 0 3px rgba(201, 169, 106, 0.10);
+    }
+
+    .quiz-actions {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .milestone-card,
+    .analysis-card {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(42px, 7vw, 82px);
+      text-align: center;
+    }
+
+    .milestone-symbol {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--gold-dark);
+      background:
+        radial-gradient(circle, rgba(216, 189, 131, 0.42), rgba(248, 245, 240, 0.82));
+      border: 1px solid rgba(168, 134, 76, 0.30);
+      font-size: 30px;
+    }
+
+    .milestone-card p,
+    .analysis-card p {
+      margin-inline: auto;
+      max-width: 590px;
+      color: var(--text-soft);
+      font-size: 17px;
+    }
+
+    .loader {
+      width: 104px;
+      height: 104px;
+      margin: 0 auto 28px;
+      border-radius: 50%;
+      position: relative;
+      border: 1px solid rgba(168, 134, 76, 0.26);
+    }
+
+    .loader::before,
+    .loader::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      inset: 10px;
+      border: 3px solid transparent;
+      border-top-color: var(--gold);
+      animation: spin 1.3s linear infinite;
+    }
+
+    .loader::after {
+      inset: 26px;
+      border-top-color: var(--sage);
+      animation-direction: reverse;
+      animation-duration: 1.8s;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .result-shell {
+      display: grid;
+      gap: 24px;
+    }
+
+    .result-hero {
+      padding: clamp(30px, 5vw, 60px);
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .score-card {
+      min-height: 340px;
+      border-radius: 28px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(216, 189, 131, 0.32), rgba(255, 255, 255, 0.18) 46%, transparent 70%),
+        linear-gradient(145deg, rgba(232, 221, 209, 0.54), rgba(220, 228, 214, 0.64));
+      border: 1px solid rgba(201, 169, 106, 0.22);
+    }
+
+    .score-ring {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: conic-gradient(var(--gold) 0deg, var(--gold) 0deg, rgba(255,255,255,0.62) 0deg);
+      transition: background 700ms ease;
+    }
+
+    .score-ring::after {
+      content: "";
+      position: absolute;
+      width: 164px;
+      height: 164px;
+      border-radius: 50%;
+      background: rgba(248, 245, 240, 0.96);
+      box-shadow: inset 0 0 0 1px rgba(201, 169, 106, 0.14);
+    }
+
+    .score-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .score-value {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 52px;
+      line-height: 1;
+    }
+
+    .score-label {
+      display: block;
+      margin-top: 8px;
+      color: var(--text-soft);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .result-intro p {
+      color: var(--text-soft);
+      font-size: 17px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .result-card {
+      padding: clamp(24px, 4vw, 40px);
+    }
+
+    .result-tag {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: var(--gold-dark);
+      background: rgba(216, 189, 131, 0.18);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .result-card p {
+      margin-bottom: 0;
+      color: var(--text-soft);
+    }
+
+    .action-box {
+      margin-top: 22px;
+      padding: 18px;
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      background: rgba(242, 236, 228, 0.76);
+    }
+
+    .action-box strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .chart-card {
+      padding: clamp(24px, 4vw, 42px);
+      overflow: hidden;
+    }
+
+    .chart-wrap {
+      max-width: 680px;
+      margin: 10px auto 0;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .category-bars {
+      margin-top: 30px;
+      display: grid;
+      gap: 15px;
+    }
+
+    .category-row {
+      display: grid;
+      grid-template-columns: 185px 1fr 54px;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .category-name {
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .category-track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--cream);
+    }
+
+    .category-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--sage-light));
+      transition: width 700ms ease;
+    }
+
+    .category-score {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 750;
+      text-align: right;
+    }
+
+    .cta-card {
+      padding: clamp(32px, 6vw, 64px);
+      text-align: center;
+      background:
+        linear-gradient(145deg, rgba(59, 49, 44, 0.97), rgba(76, 64, 56, 0.96));
+      color: var(--ivory);
+    }
+
+    .cta-card p {
+      max-width: 650px;
+      margin: 0 auto 28px;
+      color: rgba(248, 245, 240, 0.72);
+      font-size: 17px;
+    }
+
+    .cta-card .eyebrow {
+      color: var(--gold-light);
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .footer {
+      width: min(1120px, 100%);
+      margin: 28px auto 0;
+      padding: 14px 4px 4px;
+      color: var(--text-soft);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .footer a {
+      color: var(--gold-dark);
+      text-underline-offset: 3px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .resume-note {
+      margin-top: 18px;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .resume-note button {
+      border: 0;
+      padding: 0;
+      color: var(--gold-dark);
+      background: transparent;
+      font-weight: 750;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-card,
+      .result-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        min-height: 380px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-row {
+        grid-template-columns: 1fr 52px;
+      }
+
+      .category-track {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-shell {
+        padding: 14px;
+      }
+
+      .brand-bar {
+        align-items: flex-start;
+      }
+
+      .privacy-note {
+        display: none;
+      }
+
+      .brand-name {
+        font-size: 15px;
+      }
+
+      .hero-copy,
+      .quiz-card,
+      .result-card,
+      .chart-card {
+        padding: 24px;
+      }
+
+      .hero-card {
+        min-height: auto;
+      }
+
+      .hero-art {
+        min-height: 300px;
+      }
+
+      .energy-orbit {
+        width: 230px;
+      }
+
+      .trust-list {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .button-row,
+      .quiz-actions,
+      .result-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .question-wrap {
+        min-height: 500px;
+      }
+
+      .score-ring {
+        width: 178px;
+        height: 178px;
+      }
+
+      .score-ring::after {
+        width: 138px;
+        height: 138px;
+      }
+
+      .score-value {
+        font-size: 43px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .brand-bar,
+      .footer,
+      .result-actions,
+      .cta-card {
+        display: none !important;
+      }
+
+      .page-shell {
+        padding: 0;
+      }
+
+      .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+      }
+
+      .screen {
+        display: none !important;
+      }
+
+      #resultScreen {
+        display: block !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="brand-bar" aria-label="Brand">
+      <a class="brand" href="https://yuliyasoldatova.com" aria-label="Yuliya Soldatova home">
+        <span class="brand-mark" aria-hidden="true">YS</span>
+        <span>
+          <span class="brand-name">Yuliya Soldatova</span>
+          <span class="brand-subtitle">Energy Reset Assessment</span>
+        </span>
+      </a>
+      <div class="privacy-note">Free • Private • Reflective self-assessment</div>
+    </header>
+
+    <main class="app">
+      <!-- START SCREEN -->
+      <section id="startScreen" class="screen active" aria-labelledby="startTitle">
+        <div class="card hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">Free 49-question assessment</p>
+            <h1 id="startTitle">What’s Draining Your Energy?</h1>
+            <p class="hero-lead">
+              Discover the hidden patterns that may be leaving you exhausted,
+              overwhelmed, or disconnected from yourself—and receive a
+              personalized Energy Profile with a practical first step.
+            </p>
+
+            <ul class="trust-list" aria-label="Assessment features">
+              <li>5–7 minutes</li>
+              <li>Instant personalized results</li>
+              <li>Seven areas of your inner life</li>
+              <li>No right or wrong answers</li>
+            </ul>
+
+            <div class="button-row">
+              <button id="startButton" class="btn btn-primary" type="button">
+                Start My Assessment
+              </button>
+              <button id="resumeButton" class="btn btn-secondary hidden" type="button">
+                Continue Where I Left Off
+              </button>
+            </div>
+
+            <p id="resumeNote" class="resume-note hidden">
+              A saved assessment was found.
+              <button id="clearProgressButton" type="button">Start again</button>
+            </p>
+          </div>
+
+          <div class="hero-art" aria-hidden="true">
+            <div class="energy-orbit">
+              <div class="orbit-copy">
+                <strong>7</strong>
+                <span>Energy dimensions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ SCREEN -->
+      <section id="quizScreen" class="screen" aria-live="polite">
+        <div class="card quiz-card">
+          <div class="quiz-top">
+            <div class="quiz-meta">
+              <span id="progressLabel">Question 1 of 49</span>
+              <span id="progressPercent">2%</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="question-wrap">
+            <div id="questionNumber" class="question-number">Question 1</div>
+            <h2 id="questionText" class="question-text"></h2>
+            <div id="answers" class="answers" role="group" aria-label="Answer options"></div>
+          </div>
+
+          <div class="quiz-actions">
+            <button id="backButton" class="btn btn-ghost" type="button">← Back</button>
+            <span style="color: var(--text-soft); font-size: 13px;">Choose the answer that feels most true today.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MILESTONE SCREEN -->
+      <section id="milestoneScreen" class="screen">
+        <div class="card milestone-card">
+          <div class="milestone-symbol" aria-hidden="true">✦</div>
+          <p class="eyebrow">A moment to pause</p>
+          <h2 id="milestoneTitle">You’re doing beautifully.</h2>
+          <p id="milestoneText">
+            Keep choosing the answer that reflects your life right now—not the person you think you should be.
+          </p>
+          <button id="continueButton" class="btn btn-primary" type="button">Continue</button>
+        </div>
+      </section>
+
+      <!-- ANALYSIS SCREEN -->
+      <section id="analysisScreen" class="screen">
+        <div class="card analysis-card">
+          <div class="loader" aria-hidden="true"></div>
+          <p class="eyebrow">Building your profile</p>
+          <h2>Connecting the patterns in your answers…</h2>
+          <p id="analysisMessage">Identifying your strongest area and the part of your energy that needs attention first.</p>
+        </div>
+      </section>
+
+      <!-- RESULT SCREEN -->
+      <section id="resultScreen" class="screen" aria-labelledby="resultTitle">
+        <div class="result-shell">
+          <div class="card result-hero">
+            <div class="score-card">
+              <div id="scoreRing" class="score-ring">
+                <div class="score-content">
+                  <span id="overallScore" class="score-value">0%</span>
+                  <span class="score-label">Overall energy</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="result-intro">
+              <p class="eyebrow">Your Energy Profile</p>
+              <h2 id="resultTitle">Your energy is asking for a reset.</h2>
+              <p id="resultSummary"></p>
+              <div class="result-actions">
+                <button id="printButton" class="btn btn-primary" type="button">
+                  Save / Print My Report
+                </button>
+                <button id="retakeButton" class="btn btn-secondary" type="button">
+                  Retake Assessment
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-grid">
+            <article class="card result-card">
+              <span class="result-tag">Your strongest area</span>
+              <h3 id="strengthTitle"></h3>
+              <p id="strengthText"></p>
+            </article>
+
+            <article class="card result-card">
+              <span class="result-tag">Your biggest energy drain</span>
+              <h3 id="drainTitle"></h3>
+              <p id="drainText"></p>
+              <div class="action-box">
+                <strong>Your first reset step</strong>
+                <span id="firstStep"></span>
+              </div>
+            </article>
+          </div>
+
+          <div class="card chart-card">
+            <p class="eyebrow">Your seven energy dimensions</p>
+            <h3>Your personal Energy Wheel</h3>
+            <div class="chart-wrap">
+              <canvas id="radarChart" width="680" height="560" aria-label="Energy dimensions chart"></canvas>
+            </div>
+            <div id="categoryBars" class="category-bars"></div>
+          </div>
+
+          <div class="card cta-card">
+            <p class="eyebrow">Continue your reset</p>
+            <h2>Understanding the pattern is the beginning.</h2>
+            <p>
+              Use your result as a starting point for deeper reflection, practical exercises,
+              and a more intentional relationship with your energy.
+            </p>
+            <div class="result-actions">
+              <a
+                class="btn btn-primary"
+                href="https://yuliyasoldatova.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Explore Yuliya’s Resources
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        This reflective assessment is for educational and self-discovery purposes only.
+        It is not a medical or psychological diagnosis.
+        © <span id="currentYear"></span> Yuliya Soldatova.
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    "use strict";
+
+    const STORAGE_KEY = "yuliya_energy_assessment_v1";
+
+    const categories = {
+      safety: {
+        name: "Safety & Stability",
+        short: "Stability",
+        drainTitle: "Your energy may be drained by instability",
+        drainText:
+          "A meaningful part of your energy may be going into staying alert, managing uncertainty, and trying to keep everything under control. Even when nothing is visibly wrong, your body and mind may struggle to fully switch off.",
+        strengthText:
+          "You have a valuable sense of inner grounding. You are able to meet uncertainty with steadiness and return to a feeling of safety without needing every detail to be controlled.",
+        firstStep:
+          "Create one small source of predictability today: a calm morning ritual, a clear priority, or ten uninterrupted minutes without your phone."
+      },
+      joy: {
+        name: "Joy & Emotional Flow",
+        short: "Joy",
+        drainTitle: "Your energy may be drained by emotional disconnection",
+        drainText:
+          "Life may have become heavily focused on responsibility, usefulness, and getting things done. When pleasure, play, and your own desires are repeatedly postponed, energy can begin to feel flat or unavailable.",
+        strengthText:
+          "You have a natural ability to notice what nourishes you and to let joy, emotion, and pleasure have a legitimate place in your life.",
+        firstStep:
+          "Ask yourself: “What would feel genuinely nourishing today?” Choose one answer and give it at least fifteen minutes."
+      },
+      power: {
+        name: "Confidence & Personal Power",
+        short: "Power",
+        drainTitle: "Your energy may be drained by self-doubt",
+        drainText:
+          "You may be spending more energy questioning yourself than acting on what you already know. Comparison, perfectionism, and the need for reassurance can make even simple choices feel heavier than they need to be.",
+        strengthText:
+          "You have a healthy capacity to trust your judgment, recognize your progress, and move forward without requiring constant approval.",
+        firstStep:
+          "Make one low-risk decision today without asking anyone else what they think. Let the decision itself become practice in self-trust."
+      },
+      connection: {
+        name: "Love & Connection",
+        short: "Connection",
+        drainTitle: "Your energy may be drained by overgiving",
+        drainText:
+          "You may be highly attuned to what other people need while losing contact with your own limits. Caring becomes exhausting when receiving, asking, and self-compassion do not receive equal space.",
+        strengthText:
+          "You have a warm and supportive relationship with connection. You can care deeply while remaining in contact with your own emotional needs and capacity.",
+        firstStep:
+          "Notice one place where you are giving more than you genuinely have. Reduce, postpone, or ask for support with one small part of it."
+      },
+      voice: {
+        name: "Authentic Voice",
+        short: "Voice",
+        drainTitle: "Your energy may be drained by unspoken needs",
+        drainText:
+          "A significant amount of energy may be held inside unsaid feelings, softened opinions, and boundaries that never become words. Avoiding discomfort can create a quiet but persistent inner tension.",
+        strengthText:
+          "You are able to communicate with honesty and self-respect. Your voice has room to be clear without becoming harsh, and your needs are allowed to exist.",
+        firstStep:
+          "Write one honest sentence you have been avoiding. You do not have to send it yet—begin by letting yourself name it clearly."
+      },
+      clarity: {
+        name: "Clarity & Inner Wisdom",
+        short: "Clarity",
+        drainTitle: "Your energy may be drained by mental overload",
+        drainText:
+          "Your mind may be carrying too many open loops, possible scenarios, and competing opinions. Overthinking can feel productive while quietly separating you from the simple next step.",
+        strengthText:
+          "You have a strong relationship with inner clarity. You can hear your own perspective, sort useful information from noise, and move toward decisions.",
+        firstStep:
+          "Replace “What if?” with “What is true right now?” Write down three facts and choose the smallest useful next action."
+      },
+      purpose: {
+        name: "Purpose & Higher Meaning",
+        short: "Purpose",
+        drainTitle: "Your energy may be drained by a lack of direction",
+        drainText:
+          "Daily life may be functioning on the surface while feeling disconnected from inspiration, personal meaning, or a sense of movement. Energy often fades when there is no emotionally meaningful ‘why.’",
+        strengthText:
+          "You have a living connection to meaning and direction. You can see how your everyday choices relate to the person you are becoming.",
+        firstStep:
+          "Name one activity that makes you feel more alive, useful, or connected to something meaningful. Put a small version of it into this week."
+      }
+    };
+
+    const groupedQuestions = {
+      safety: [
+        {
+          text: "When you wake up in the morning, what usually happens first?",
+          options: [
+            "I immediately start thinking about everything I need to do.",
+            "I check my phone before I even get out of bed.",
+            "I take a few quiet moments before starting my day.",
+            "I wake up feeling calm and ready for the day."
+          ]
+        },
+        {
+          text: "If something unexpected changes your plans, your first reaction is usually…",
+          options: [
+            "I feel anxious and struggle to adapt.",
+            "I get frustrated but eventually adjust.",
+            "I stay flexible and find another solution.",
+            "I often enjoy unexpected changes."
+          ]
+        },
+        {
+          text: "Which statement feels most true lately?",
+          options: [
+            "I feel like I’m constantly trying to catch up.",
+            "I rarely feel like I can truly relax.",
+            "Most days feel manageable.",
+            "I usually feel grounded and secure."
+          ]
+        },
+        {
+          text: "Imagine you suddenly have an entire free afternoon. What are you most likely to do?",
+          options: [
+            "Catch up on unfinished tasks.",
+            "Worry about what I should be doing.",
+            "Enjoy a hobby or spend time outdoors.",
+            "Rest without feeling guilty."
+          ]
+        },
+        {
+          text: "When life becomes stressful, you usually…",
+          options: [
+            "Feel like everything is happening at once.",
+            "Try to stay in control of every detail.",
+            "Focus on one thing at a time.",
+            "Trust that I’ll handle whatever comes."
+          ]
+        },
+        {
+          text: "At the end of most days, you feel…",
+          options: [
+            "Completely drained.",
+            "Tired but mentally restless.",
+            "Peacefully tired.",
+            "Calm and satisfied."
+          ]
+        },
+        {
+          text: "Which sentence sounds most like you?",
+          options: [
+            "I never really switch off.",
+            "I often feel like something might go wrong.",
+            "I’m learning to slow down.",
+            "I usually feel safe in my own life."
+          ]
+        }
+      ],
+      joy: [
+        {
+          text: "When was the last time you did something simply because it made you happy?",
+          options: [
+            "I honestly can’t remember.",
+            "It has been a while.",
+            "Within the past week.",
+            "I make time for joyful moments regularly."
+          ]
+        },
+        {
+          text: "How do you usually respond when you want something just for yourself?",
+          options: [
+            "I immediately think of reasons why I shouldn’t.",
+            "I tell myself I’ll do it later.",
+            "I consider it if my responsibilities allow.",
+            "I believe my needs deserve space too."
+          ]
+        },
+        {
+          text: "Imagine you have a completely free Saturday. What feels most realistic?",
+          options: [
+            "I’ll spend most of it catching up on chores.",
+            "I’ll probably end up taking care of other people.",
+            "I’ll divide my time between responsibilities and things I enjoy.",
+            "I’ll intentionally make time for what brings me joy."
+          ]
+        },
+        {
+          text: "Which sentence feels closest to your life right now?",
+          options: [
+            "My life feels mostly like responsibilities.",
+            "I rarely stop to enjoy the present moment.",
+            "I experience moments of joy, but I’d like more of them.",
+            "I regularly notice and appreciate small moments of happiness."
+          ]
+        },
+        {
+          text: "When you’re emotionally overwhelmed, you usually…",
+          options: [
+            "Push my feelings aside and keep going.",
+            "Distract myself until the feeling passes.",
+            "Give myself some time to process what’s happening.",
+            "Listen to what my emotions are trying to tell me."
+          ]
+        },
+        {
+          text: "How comfortable are you asking yourself, “What do I need right now?”",
+          options: [
+            "I almost never ask myself that.",
+            "I ask, but usually ignore the answer.",
+            "I’m learning to listen to myself.",
+            "I regularly check in with my needs."
+          ]
+        },
+        {
+          text: "Complete this sentence: “Joy in my life feels…”",
+          options: [
+            "Rare and difficult to reach.",
+            "Like something I have to earn.",
+            "Present, but easy to forget.",
+            "Like a natural part of my everyday life."
+          ]
+        }
+      ],
+      power: [
+        {
+          text: "When you have an important decision to make, you usually…",
+          options: [
+            "Delay it for as long as possible.",
+            "Ask several people what they think first.",
+            "Reflect for a while and then decide.",
+            "Trust myself and take action."
+          ]
+        },
+        {
+          text: "How often do you compare yourself to other people?",
+          options: [
+            "Almost every day.",
+            "More often than I’d like.",
+            "Occasionally.",
+            "Rarely."
+          ]
+        },
+        {
+          text: "When you receive a compliment, your first reaction is usually…",
+          options: [
+            "I immediately dismiss it.",
+            "I feel uncomfortable accepting it.",
+            "I say thank you, but still question it.",
+            "I genuinely appreciate it."
+          ]
+        },
+        {
+          text: "If someone disagrees with you…",
+          options: [
+            "I immediately question myself.",
+            "I feel the need to explain or defend myself.",
+            "I stay open to their opinion.",
+            "I remain confident in my perspective."
+          ]
+        },
+        {
+          text: "Which statement feels closest to your current life?",
+          options: [
+            "I often feel like I’m not enough.",
+            "I constantly try to prove myself.",
+            "I’m learning to trust myself.",
+            "I believe in my abilities."
+          ]
+        },
+        {
+          text: "When you think about your goals…",
+          options: [
+            "They feel overwhelming.",
+            "I keep postponing them.",
+            "I’m making steady progress.",
+            "I feel excited to pursue them."
+          ]
+        },
+        {
+          text: "How easy is it for you to celebrate your own achievements?",
+          options: [
+            "Very difficult.",
+            "I rarely acknowledge them.",
+            "I’m getting better at it.",
+            "I celebrate even small wins."
+          ]
+        }
+      ],
+      connection: [
+        {
+          text: "When someone asks for your help…",
+          options: [
+            "I almost always say yes, even when I’m exhausted.",
+            "I feel guilty saying no.",
+            "I try to find a balance.",
+            "I help when I genuinely have the capacity."
+          ]
+        },
+        {
+          text: "How comfortable are you receiving support?",
+          options: [
+            "Very uncomfortable.",
+            "I rarely ask for help.",
+            "I’m learning to receive support.",
+            "I can both give and receive."
+          ]
+        },
+        {
+          text: "Which sentence feels most true?",
+          options: [
+            "I often feel emotionally alone.",
+            "I care for everyone except myself.",
+            "I’m learning to care for myself too.",
+            "I feel deeply connected with myself and others."
+          ]
+        },
+        {
+          text: "When someone hurts your feelings…",
+          options: [
+            "I usually stay silent.",
+            "I replay it in my head for days.",
+            "I eventually talk about it.",
+            "I communicate honestly and respectfully."
+          ]
+        },
+        {
+          text: "How often do you make time just for yourself?",
+          options: [
+            "Almost never.",
+            "Only after everything else is done.",
+            "A few times each week.",
+            "It’s a regular part of my life."
+          ]
+        },
+        {
+          text: "When you look in the mirror…",
+          options: [
+            "I’m very critical of myself.",
+            "I mostly notice flaws.",
+            "I’m learning to accept myself.",
+            "I feel kindness toward myself."
+          ]
+        },
+        {
+          text: "Complete this sentence: “My relationship with myself feels…”",
+          options: [
+            "Distant.",
+            "Complicated.",
+            "Improving.",
+            "Warm and supportive."
+          ]
+        }
+      ],
+      voice: [
+        {
+          text: "How often do you say “yes” when you actually want to say “no”?",
+          options: [
+            "Almost every time.",
+            "More often than I’d like.",
+            "Occasionally.",
+            "Rarely—I respect my limits."
+          ]
+        },
+        {
+          text: "When something bothers you, what usually happens?",
+          options: [
+            "I keep it to myself and hope it passes.",
+            "I hint at it but avoid saying it directly.",
+            "I wait until I feel ready and then bring it up.",
+            "I address it clearly and respectfully."
+          ]
+        },
+        {
+          text: "In a group conversation, your opinion is different from everyone else’s. You usually…",
+          options: [
+            "Stay quiet.",
+            "Soften my opinion until it barely sounds like mine.",
+            "Share it carefully.",
+            "Express it openly without needing everyone to agree."
+          ]
+        },
+        {
+          text: "When people misunderstand you…",
+          options: [
+            "I assume I explained myself badly and withdraw.",
+            "I feel frustrated but say nothing.",
+            "I try to clarify what I meant.",
+            "I calmly explain myself and accept that not everyone will understand."
+          ]
+        },
+        {
+          text: "How easy is it for you to ask for what you need?",
+          options: [
+            "Very difficult—I often expect people to notice.",
+            "I ask only when I have no other option.",
+            "I’m learning to ask more directly.",
+            "I can name my needs without excessive guilt."
+          ]
+        },
+        {
+          text: "Which sentence sounds most like you?",
+          options: [
+            "I often edit myself to keep the peace.",
+            "I worry that honesty will disappoint people.",
+            "I’m becoming more comfortable being direct.",
+            "My words usually reflect what I genuinely think and feel."
+          ]
+        },
+        {
+          text: "If you could say one thing without fear of judgment, what feels most true?",
+          options: [
+            "There are many things I have never said.",
+            "I know what I want to say, but I’m afraid of the consequences.",
+            "I’m slowly giving my truth more space.",
+            "I already allow myself to speak honestly."
+          ]
+        }
+      ],
+      clarity: [
+        {
+          text: "When you need to make an important decision, what happens inside your mind?",
+          options: [
+            "I go in circles and feel more confused.",
+            "I collect more and more opinions.",
+            "I give myself time and then choose.",
+            "I can separate fear from what I genuinely know."
+          ]
+        },
+        {
+          text: "When your intuition quietly tells you something…",
+          options: [
+            "I usually dismiss it.",
+            "I notice it but quickly overthink it.",
+            "I consider it alongside the facts.",
+            "I trust it as an important source of information."
+          ]
+        },
+        {
+          text: "How easy is it for you to quiet your mind?",
+          options: [
+            "It feels almost impossible.",
+            "Only when I’m completely exhausted.",
+            "I can create short moments of calm.",
+            "I have reliable ways to return to mental clarity."
+          ]
+        },
+        {
+          text: "Which statement feels most accurate lately?",
+          options: [
+            "My thoughts feel scattered in every direction.",
+            "I know I need clarity, but I keep consuming more information.",
+            "I’m beginning to see what matters most.",
+            "I feel clear about my current priorities."
+          ]
+        },
+        {
+          text: "When life feels confusing, you usually…",
+          options: [
+            "Freeze and avoid making a move.",
+            "Search for the perfect answer.",
+            "Take a small step and learn from it.",
+            "Return to my values and decide from there."
+          ]
+        },
+        {
+          text: "How connected do you feel to your own inner voice?",
+          options: [
+            "I barely hear it.",
+            "Other people’s opinions are often louder.",
+            "I’m learning to distinguish it from fear.",
+            "I recognize and respect it."
+          ]
+        },
+        {
+          text: "Imagine someone asks, “What do you truly want?” Your honest response is…",
+          options: [
+            "I genuinely don’t know.",
+            "I know what I should want, but not what I want.",
+            "I have a few clear clues.",
+            "I can name what matters to me right now."
+          ]
+        }
+      ],
+      purpose: [
+        {
+          text: "How meaningful does your daily life feel right now?",
+          options: [
+            "Mostly empty or repetitive.",
+            "Functional, but disconnected from what matters to me.",
+            "Meaningful in some areas.",
+            "Deeply connected to what I value."
+          ]
+        },
+        {
+          text: "Do you feel connected to something bigger than your immediate responsibilities?",
+          options: [
+            "Not at all.",
+            "Only occasionally.",
+            "I’m exploring what that means for me.",
+            "Yes—it gives my life perspective and direction."
+          ]
+        },
+        {
+          text: "When you imagine the next five years…",
+          options: [
+            "I feel blank or anxious.",
+            "I mostly hope things will somehow improve.",
+            "I can imagine a few meaningful possibilities.",
+            "I feel connected to a direction that excites me."
+          ]
+        },
+        {
+          text: "What motivates you most each morning?",
+          options: [
+            "Getting through what has to be done.",
+            "Avoiding falling behind.",
+            "A mixture of responsibilities and personal goals.",
+            "A sense that my actions are building something meaningful."
+          ]
+        },
+        {
+          text: "Which sentence best describes your current path?",
+          options: [
+            "I feel lost.",
+            "I’m searching, but nothing fully fits.",
+            "I’m discovering what matters through experience.",
+            "I feel aligned with the direction I’m moving in."
+          ]
+        },
+        {
+          text: "How often do you feel genuinely inspired by your own life?",
+          options: [
+            "Almost never.",
+            "Occasionally, but the feeling disappears quickly.",
+            "More often than before.",
+            "Regularly—I feel emotionally connected to where I’m going."
+          ]
+        },
+        {
+          text: "Complete this sentence: “My life feels…”",
+          options: [
+            "Like I’m simply getting through the days.",
+            "Like I’m searching for something I can’t quite name.",
+            "Like I’m gradually moving toward something meaningful.",
+            "Like I’m living in alignment with who I truly am."
+          ]
+        }
+      ]
+    };
+
+    // Interleave categories so the user does not answer seven similar questions in a row.
+    const categoryOrder = ["safety", "joy", "power", "connection", "voice", "clarity", "purpose"];
+    const questions = [];
+
+    for (let round = 0; round < 7; round += 1) {
+      for (const category of categoryOrder) {
+        const source = groupedQuestions[category][round];
+        questions.push({
+          ...source,
+          category,
+          scores: [0, 1, 2, 3]
+        });
+      }
+    }
+
+    const milestoneMessages = [
+      {
+        title: "You’re doing beautifully.",
+        text: "Keep choosing the answer that reflects your life right now—not the person you think you should be."
+      },
+      {
+        title: "You’re noticing important patterns.",
+        text: "There is no ideal profile. Honest answers create the most useful result."
+      },
+      {
+        title: "You’re almost halfway there.",
+        text: "Take one slow breath and continue at your own pace."
+      },
+      {
+        title: "Your profile is becoming clearer.",
+        text: "Small details in your answers help reveal where your energy is supported—and where it is being spent."
+      },
+      {
+        title: "You’re doing meaningful work.",
+        text: "Self-awareness is not about judging yourself. It is about seeing yourself with more honesty and care."
+      },
+      {
+        title: "Only a few questions remain.",
+        text: "Stay with your first honest response rather than searching for the perfect answer."
+      }
+    ];
+
+    const state = {
+      currentIndex: 0,
+      answers: Array(questions.length).fill(null)
+    };
+
+    const elements = {
+      screens: {
+        start: document.getElementById("startScreen"),
+        quiz: document.getElementById("quizScreen"),
+        milestone: document.getElementById("milestoneScreen"),
+        analysis: document.getElementById("analysisScreen"),
+        result: document.getElementById("resultScreen")
+      },
+      startButton: document.getElementById("startButton"),
+      resumeButton: document.getElementById("resumeButton"),
+      resumeNote: document.getElementById("resumeNote"),
+      clearProgressButton: document.getElementById("clearProgressButton"),
+      progressLabel: document.getElementById("progressLabel"),
+      progressPercent: document.getElementById("progressPercent"),
+      progressBar: document.getElementById("progressBar"),
+      questionNumber: document.getElementById("questionNumber"),
+      questionText: document.getElementById("questionText"),
+      answers: document.getElementById("answers"),
+      backButton: document.getElementById("backButton"),
+      milestoneTitle: document.getElementById("milestoneTitle"),
+      milestoneText: document.getElementById("milestoneText"),
+      continueButton: document.getElementById("continueButton"),
+      analysisMessage: document.getElementById("analysisMessage"),
+      scoreRing: document.getElementById("scoreRing"),
+      overallScore: document.getElementById("overallScore"),
+      resultTitle: document.getElementById("resultTitle"),
+      resultSummary: document.getElementById("resultSummary"),
+      strengthTitle: document.getElementById("strengthTitle"),
+      strengthText: document.getElementById("strengthText"),
+      drainTitle: document.getElementById("drainTitle"),
+      drainText: document.getElementById("drainText"),
+      firstStep: document.getElementById("firstStep"),
+      radarChart: document.getElementById("radarChart"),
+      categoryBars: document.getElementById("categoryBars"),
+      printButton: document.getElementById("printButton"),
+      retakeButton: document.getElementById("retakeButton"),
+      currentYear: document.getElementById("currentYear")
+    };
+
+    function showScreen(name) {
+      Object.values(elements.screens).forEach((screen) => screen.classList.remove("active"));
+      elements.screens[name].classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function saveProgress() {
+      const payload = {
+        currentIndex: state.currentIndex,
+        answers: state.answers,
+        savedAt: Date.now()
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    }
+
+    function loadProgress() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+
+      try {
+        const saved = JSON.parse(raw);
+        if (
+          !Array.isArray(saved.answers) ||
+          saved.answers.length !== questions.length ||
+          typeof saved.currentIndex !== "number"
+        ) {
+          return false;
+        }
+
+        state.currentIndex = Math.min(Math.max(saved.currentIndex, 0), questions.length - 1);
+        state.answers = saved.answers;
+        return state.answers.some((value) => value !== null);
+      } catch {
+        return false;
+      }
+    }
+
+    function clearProgress() {
+      localStorage.removeItem(STORAGE_KEY);
+      state.currentIndex = 0;
+      state.answers = Array(questions.length).fill(null);
+      elements.resumeButton.classList.add("hidden");
+      elements.resumeNote.classList.add("hidden");
+    }
+
+    function renderQuestion() {
+      const question = questions[state.currentIndex];
+      const completedCount = state.answers.filter((answer) => answer !== null).length;
+      const currentProgress = Math.round(((state.currentIndex + 1) / questions.length) * 100);
+
+      elements.progressLabel.textContent = `Question ${state.currentIndex + 1} of ${questions.length}`;
+      elements.progressPercent.textContent = `${currentProgress}%`;
+      elements.progressBar.style.width = `${currentProgress}%`;
+      elements.questionNumber.textContent = `Question ${state.currentIndex + 1}`;
+      elements.questionText.textContent = question.text;
+      elements.answers.innerHTML = "";
+
+      question.options.forEach((option, optionIndex) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "answer";
+        button.textContent = option;
+
+        if (state.answers[state.currentIndex] === optionIndex) {
+          button.classList.add("selected");
+        }
+
+        button.addEventListener("click", () => selectAnswer(optionIndex));
+        elements.answers.appendChild(button);
+      });
+
+      elements.backButton.disabled = state.currentIndex === 0;
+      elements.backButton.style.opacity = state.currentIndex === 0 ? "0.35" : "1";
+
+      if (completedCount > 0) saveProgress();
+    }
+
+    function selectAnswer(optionIndex) {
+      state.answers[state.currentIndex] = optionIndex;
+      saveProgress();
+
+      const answerButtons = [...elements.answers.querySelectorAll(".answer")];
+      answerButtons.forEach((button, index) => {
+        button.classList.toggle("selected", index === optionIndex);
+      });
+
+      setTimeout(() => {
+        const isLastQuestion = state.currentIndex === questions.length - 1;
+
+        if (isLastQuestion) {
+          runAnalysis();
+          return;
+        }
+
+        const completedQuestionNumber = state.currentIndex + 1;
+        state.currentIndex += 1;
+        saveProgress();
+
+        if (completedQuestionNumber % 7 === 0 && completedQuestionNumber < questions.length) {
+          const milestoneIndex = completedQuestionNumber / 7 - 1;
+          const message = milestoneMessages[milestoneIndex];
+          elements.milestoneTitle.textContent = message.title;
+          elements.milestoneText.textContent = message.text;
+          showScreen("milestone");
+        } else {
+          renderQuestion();
+        }
+      }, 180);
+    }
+
+    function calculateResults() {
+      const totals = Object.fromEntries(categoryOrder.map((category) => [category, 0]));
+      const maxPerCategory = 7 * 3;
+
+      questions.forEach((question, index) => {
+        const selectedOption = state.answers[index];
+        const score = selectedOption === null ? 0 : question.scores[selectedOption];
+        totals[question.category] += score;
+      });
+
+      const percentages = {};
+      for (const category of categoryOrder) {
+        percentages[category] = Math.round((totals[category] / maxPerCategory) * 100);
+      }
+
+      const overall = Math.round(
+        categoryOrder.reduce((sum, category) => sum + percentages[category], 0) /
+          categoryOrder.length
+      );
+
+      const sorted = [...categoryOrder].sort(
+        (a, b) => percentages[a] - percentages[b]
+      );
+
+      return {
+        percentages,
+        overall,
+        drain: sorted[0],
+        secondaryDrain: sorted[1],
+        strength: sorted[sorted.length - 1]
+      };
+    }
+
+    function getOverallMessage(score) {
+      if (score < 35) {
+        return {
+          title: "Your energy needs gentle, immediate support.",
+          summary:
+            "Your answers suggest that several parts of your inner life may be asking for attention at the same time. This is not a sign that you are failing—it may be a sign that you have been carrying too much for too long. Begin with the smallest possible act of support."
+        };
+      }
+
+      if (score < 55) {
+        return {
+          title: "Your energy is asking for a meaningful reset.",
+          summary:
+            "You have resources available, but a few repeating patterns may be consuming more energy than you realize. The most useful next step is not to fix everything—it is to begin with the area creating the greatest daily strain."
+        };
+      }
+
+      if (score < 75) {
+        return {
+          title: "You have a solid foundation with one clear growth edge.",
+          summary:
+            "Your profile shows meaningful inner resources alongside one or two areas that may be quietly reducing your energy. A focused adjustment could make your daily life feel noticeably lighter."
+        };
+      }
+
+      return {
+        title: "Your energy profile is well supported.",
+        summary:
+          "Your answers reflect strong self-awareness and a healthy relationship with several areas of your inner life. Your next step is less about repair and more about protecting what already works while refining the area that scored lowest."
+      };
+    }
+
+    function runAnalysis() {
+      showScreen("analysis");
+
+      const messages = [
+        "Identifying your strongest area and the part of your energy that needs attention first.",
+        "Comparing your seven energy dimensions.",
+        "Preparing your personalized first step."
+      ];
+
+      let messageIndex = 0;
+      const interval = setInterval(() => {
+        messageIndex = (messageIndex + 1) % messages.length;
+        elements.analysisMessage.textContent = messages[messageIndex];
+      }, 900);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        const results = calculateResults();
+        renderResults(results);
+        localStorage.removeItem(STORAGE_KEY);
+        showScreen("result");
+      }, 2800);
+    }
+
+    function renderResults(results) {
+      const overallMessage = getOverallMessage(results.overall);
+      const strength = categories[results.strength];
+      const drain = categories[results.drain];
+
+      elements.overallScore.textContent = `${results.overall}%`;
+      elements.resultTitle.textContent = overallMessage.title;
+      elements.resultSummary.textContent = overallMessage.summary;
+
+      elements.strengthTitle.textContent = strength.name;
+      elements.strengthText.textContent = strength.strengthText;
+
+      elements.drainTitle.textContent = drain.drainTitle;
+      elements.drainText.textContent = drain.drainText;
+      elements.firstStep.textContent = drain.firstStep;
+
+      const degrees = Math.round((results.overall / 100) * 360);
+      elements.scoreRing.style.background =
+        `conic-gradient(var(--gold) 0deg, var(--gold) ${degrees}deg, rgba(255,255,255,0.62) ${degrees}deg)`;
+
+      renderCategoryBars(results.percentages);
+      drawRadarChart(results.percentages);
+    }
+
+    function renderCategoryBars(percentages) {
+      elements.categoryBars.innerHTML = "";
+
+      categoryOrder.forEach((category) => {
+        const row = document.createElement("div");
+        row.className = "category-row";
+
+        const name = document.createElement("div");
+        name.className = "category-name";
+        name.textContent = categories[category].name;
+
+        const track = document.createElement("div");
+        track.className = "category-track";
+
+        const fill = document.createElement("div");
+        fill.className = "category-fill";
+        fill.style.width = "0%";
+        track.appendChild(fill);
+
+        const score = document.createElement("div");
+        score.className = "category-score";
+        score.textContent = `${percentages[category]}%`;
+
+        row.append(name, track, score);
+        elements.categoryBars.appendChild(row);
+
+        requestAnimationFrame(() => {
+          fill.style.width = `${percentages[category]}%`;
+        });
+      });
+    }
+
+    function drawRadarChart(percentages) {
+      const canvas = elements.radarChart;
+      const ctx = canvas.getContext("2d");
+      const dpr = Math.max(window.devicePixelRatio || 1, 1);
+      const cssWidth = Math.min(canvas.parentElement.clientWidth, 680);
+      const cssHeight = Math.round(cssWidth * 0.82);
+
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+      const centerX = cssWidth / 2;
+      const centerY = cssHeight / 2 + 8;
+      const radius = Math.min(cssWidth, cssHeight) * 0.32;
+      const sides = categoryOrder.length;
+      const angleStep = (Math.PI * 2) / sides;
+      const startAngle = -Math.PI / 2;
+
+      function pointAt(index, valueRatio) {
+        const angle = startAngle + index * angleStep;
+        return {
+          x: centerX + Math.cos(angle) * radius * valueRatio,
+          y: centerY + Math.sin(angle) * radius * valueRatio
+        };
+      }
+
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(168, 134, 76, 0.18)";
+
+      for (let level = 1; level <= 5; level += 1) {
+        ctx.beginPath();
+        for (let i = 0; i < sides; i += 1) {
+          const point = pointAt(i, level / 5);
+          if (i === 0) ctx.moveTo(point.x, point.y);
+          else ctx.lineTo(point.x, point.y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < sides; i += 1) {
+        const end = pointAt(i, 1);
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      categoryOrder.forEach((category, index) => {
+        const point = pointAt(index, percentages[category] / 100);
+        if (index === 0) ctx.moveTo(point.x, point.y);
+        else ctx.lineTo(point.x, point.y);
+      });
+      ctx.closePath();
+
+      const gradient = ctx.createLinearGradient(0, 0, cssWidth, cssHeight);
+      gradient.addColorStop(0, "rgba(201, 169, 106, 0.42)");
+      gradient.addColorStop(1, "rgba(125, 139, 118, 0.34)");
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      ctx.strokeStyle = "#A8864C";
+      ctx.lineWidth = 2.4;
+      ctx.stroke();
+
+      categoryOrder.forEach((category, index) => {
+        const point = pointAt(index, percentages[category] / 100);
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#A8864C";
+        ctx.fill();
+      });
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `${Math.max(11, cssWidth * 0.020)}px Inter, sans-serif`;
+      ctx.fillStyle = "#6F6257";
+
+      categoryOrder.forEach((category, index) => {
+        const labelPoint = pointAt(index, 1.19);
+        const words = categories[category].short.split(" ");
+        words.forEach((word, wordIndex) => {
+          const lineOffset = (wordIndex - (words.length - 1) / 2) * 15;
+          ctx.fillText(word, labelPoint.x, labelPoint.y + lineOffset);
+        });
+      });
+    }
+
+    elements.startButton.addEventListener("click", () => {
+      clearProgress();
+      renderQuestion();
+      showScreen("quiz");
+    });
+
+    elements.resumeButton.addEventListener("click", () => {
+      renderQuestion();
+      showScreen("quiz");
+    });
+
+    elements.clearProgressButton.addEventListener("click", clearProgress);
+
+    elements.backButton.addEventListener("click", () => {
+      if (state.currentIndex > 0) {
+        state.currentIndex -= 1;
+        saveProgress();
+        renderQuestion();
+      }
+    });
+
+    elements.continueButton.addEventListener("click", () => {
+      renderQuestion();
+      showScreen("quiz");
+    });
+
+    elements.printButton.addEventListener("click", () => window.print());
+
+    elements.retakeButton.addEventListener("click", () => {
+      clearProgress();
+      showScreen("start");
+    });
+
+    window.addEventListener("resize", () => {
+      if (elements.screens.result.classList.contains("active")) {
+        drawRadarChart(calculateResults().percentages);
+      }
+    });
+
+    elements.currentYear.textContent = new Date().getFullYear();
+
+    if (loadProgress()) {
+      elements.resumeButton.classList.remove("hidden");
+      elements.resumeNote.classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
